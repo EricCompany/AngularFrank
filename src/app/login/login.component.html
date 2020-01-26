@@ -5,20 +5,38 @@
   <div class="ui-g">
   <div class="ui-lg-4"></div>
   <div class="ui-lg-4 top">
-<p-card header="Simple Card">
-
-
+<p-card header="Inicio de sesión">
+  <form [formGroup]="checkoutForm" novalidate>
+<br>
     <div class="ui-g">
-      <div class="ui-inputgroup">
-        <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
-        <input type="text" pInputText  style=" width:350px;" placeholder="Ejemplo@cuautla.tecnm.mx">
-      </div>
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+    <input formControlName="email" type="text" pInputText  style=" width:350px;" placeholder=" Ejemplo@cuautla.tecnm.mx">
+  </div>
+</div>
+<br>
+  <div class="ui-g">
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="pi pi-lock" style="line-height: 1.25;"></i></span>
+
+      <input type="password" formControlName="password" pPassword style=" width:350px;" placeholder=" Ingresa tu clave de acceso"/>
     </div>
+  </div>
+  <br>
+  <div class="ui-g">
+    <div class="ui-md-7">
+    <div class="ui-inputgroup">¿Has olvidado tu contraseña?
+    </div>
+    </div>
+    <div class="ui-md-5">
+    <div class="ui-inputgroup"><button pButton type="button"  (click)="login()" label="INICIAR SESIÓN" [disabled]="!checkoutForm.valid" ></button>
+    </div>
+    </div>
+  </div>
+  <br>
 
 
-
-
-
+</form>
 </p-card>
   </div>
   </div>

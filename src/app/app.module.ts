@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import {LoginComponent} from './login/login.component';
 import {CardModule} from 'primeng/card';
 import { HeaderComponent } from './header/header.component';
+import {ButtonModule} from 'primeng/button';
+import {PasswordModule} from 'primeng/password';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -17,9 +20,12 @@ import { HeaderComponent } from './header/header.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CardModule
+    CardModule,
+    ButtonModule,
+    PasswordModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [FormBuilder],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

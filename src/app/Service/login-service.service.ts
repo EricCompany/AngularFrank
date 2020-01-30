@@ -10,8 +10,6 @@ export class LoginServiceService {
 
   constructor(private http: HttpClient) { }
 
-  login(data: any): Observable<any> {
-    return this.http.post('url', data, );
-  }
+
 }
 

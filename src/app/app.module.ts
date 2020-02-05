@@ -9,13 +9,19 @@ import { HeaderComponent } from './header/header.component';
 import {ButtonModule} from 'primeng/button';
 import {PasswordModule} from 'primeng/password';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import { MainComponentComponent } from './main-component/main-component.component';
+import { MenuPrincipalComponent } from './main-component/menu-principal/menu-principal.component';
+import { BecasSubesComponent } from './main-component/becas-subes/becas-subes.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    MainComponentComponent,
+    MenuPrincipalComponent,
+    BecasSubesComponent
   ],
   imports: [
     BrowserModule,

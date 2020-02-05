@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-menu-principal',
@@ -7,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuPrincipalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) {
+    let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
+    if(dataUser === null){
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
   }

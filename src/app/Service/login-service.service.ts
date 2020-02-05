@@ -10,6 +10,10 @@ export class LoginServiceService {
 
   constructor(private http: HttpClient) { }
 
+  Login(User: FormData): Observable<any> {
+    return this.http.post('http://localhost/ServiciosEscolares/Login/login.php', User, '');
+  }
+
 
 }
 

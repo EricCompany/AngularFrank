@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
+
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 // Serivice
-import {ConfigService} from './config.service';
-
+import {ConfigService} from '../config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginServiceService {
+export class ServiceBecasService {
 
   constructor(private http: HttpClient, private endpoint: ConfigService) { }
 
-  Login(User: FormData): Observable<any> {
-    return this.http.post(this.endpoint.getEndPoint() + 'Login/login.php', User, '');
+  getPDF(File: FormData): Observable<any> {
+    return this.http.post(this.endpoint.getEndPoint() + 'PDF/mypdf.php', '');
   }
-
-
 }
-

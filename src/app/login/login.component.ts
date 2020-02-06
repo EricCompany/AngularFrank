@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 import {Message} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 
+// Block
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,6 +23,9 @@ export class LoginComponent implements OnInit {
   checkoutForm;
   resp: ResponseDTO;
   msgs: Message[] = [];
+
+  @BlockUI() blockUI: NgBlockUI;
+
   // Variabler globales form
   constructor( private messageService: MessageService, private form: FormBuilder, private http: LoginServiceService, private router: Router) {
 
@@ -34,6 +40,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.blockUI.start('Comprobando Informacion...'); // Start blocking
+
     // [routerLink]="['/ModuloBecas/']"
     // console.log(this.checkoutForm.value);
 
@@ -53,10 +61,12 @@ export class LoginComponent implements OnInit {
            this.msgs.push({severity: 'error', summary: this.resp.msg, detail: 'PrimeNG rocks'});
            // console.log();
          }
+        this.blockUI.stop();
       },
       (error) => {
 
         console.log(error);
+        this.blockUI.stop();
       }
     );
   }

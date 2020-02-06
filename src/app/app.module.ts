@@ -19,7 +19,7 @@ import {ToastModule} from 'primeng/toast';
 import {InplaceModule} from 'primeng/inplace';
 import {TreeModule} from 'primeng/tree';
 import {FileUploadModule} from 'primeng/fileupload';
-
+import { BlockUIModule } from 'ng-block-ui';
 // Echarts
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -56,7 +56,8 @@ import { MenuMainComponent } from './Menu/menu-main/menu-main.component';
     TreeModule,
     FileUploadModule,
     NgxEchartsModule,
-    StepsModule
+    StepsModule,
+    BlockUIModule.forRoot()
 
   ],
   providers: [FormBuilder],

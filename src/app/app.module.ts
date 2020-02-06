@@ -16,6 +16,9 @@ import { BecasSubesComponent } from './main-component/becas-subes/becas-subes.co
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
+import {InplaceModule} from 'primeng/inplace';
+import {TreeModule} from 'primeng/tree';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,10 @@ import {ToastModule} from 'primeng/toast';
     MessagesModule,
     MessageModule,
     ToastModule,
+    InplaceModule,
+    TreeModule,
+    FileUploadModule,
+
   ],
   providers: [FormBuilder],
   bootstrap: [AppComponent]

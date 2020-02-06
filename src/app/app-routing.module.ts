@@ -6,6 +6,7 @@ import {MainComponentComponent} from './main-component/main-component.component'
 import {MenuPrincipalComponent} from './main-component/menu-principal/menu-principal.component';
 import {BecasSubesComponent} from './main-component/becas-subes/becas-subes.component';
 
+
 const routes: Routes = [
   {path: 'ITC', component: AppComponent, children: [
 

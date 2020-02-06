@@ -23,6 +23,10 @@ import {FileUploadModule} from 'primeng/fileupload';
 // Echarts
 import { NgxEchartsModule } from 'ngx-echarts';
 
+import {StepsModule} from 'primeng/steps';
+import {MenuItem} from 'primeng/api';
+import { MenuMainComponent } from './Menu/menu-main/menu-main.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +34,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     HeaderComponent,
     MainComponentComponent,
     MenuPrincipalComponent,
-    BecasSubesComponent
+    BecasSubesComponent,
+    MenuMainComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     InplaceModule,
     TreeModule,
     FileUploadModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    StepsModule
 
   ],
   providers: [FormBuilder],

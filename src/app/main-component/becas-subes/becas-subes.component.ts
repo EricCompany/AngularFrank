@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 // get Image of Div
 import htmlToImage from 'html-to-image';
+import {CardModule} from 'primeng/card';
+import { Router } from '@angular/router';
 
 // Service
 import {ServiceBecasService} from '../../Service/Modulo1/service-becas.service';
@@ -8,22 +10,30 @@ import {ServiceBecasService} from '../../Service/Modulo1/service-becas.service';
 // Echarts
 import * as echarts from 'echarts';
 import ECharts = echarts.ECharts;
+import {MainComponentComponent} from "../main-component.component";
+
+
 
 
 @Component({
   selector: 'app-becas-subes',
   templateUrl: './becas-subes.component.html',
   styleUrls: ['./becas-subes.component.css']
+
 })
 export class BecasSubesComponent implements OnInit {
 
   options: any;
   imgBase64: string;
   estadisticas: any;
+  respBlob: any;
 
-  constructor(private http: ServiceBecasService) { }
+
+
+  constructor(public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) { }
 
   ngOnInit() {
+    this.app.activeIndex = 1;
     this.DrawGrafica();
   }
 
@@ -79,7 +89,7 @@ export class BecasSubesComponent implements OnInit {
   DrawGrafica() {
     this.options = {
       title: {
-        text: '某站点用户访问来源',
+        text: 'Estadisticas Becas Subes',
         subtext: '纯属虚构',
         left: 'center'
       },

@@ -6,7 +6,6 @@ import { LoginServiceService} from '../Service/login-service.service';
 import {ResponseDTO} from '../DTO/ResponseDTO';
 // DTO
 import {LoginDTO} from '../DTO/LoginDTO';
-import {JsonFormatter} from 'tslint/lib/formatters';
 import { Router } from '@angular/router';
 import {Message} from 'primeng/api';
 import {MessageService} from 'primeng/api';

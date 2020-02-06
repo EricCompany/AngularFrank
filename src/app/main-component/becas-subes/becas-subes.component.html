@@ -1,1 +1,51 @@
 
+
+<div class="ui-g">
+  <!-- Fila 1 -->
+  <div class="ui-g-12 ui-g-nopad">
+    <div class="ui-g-7" >JEFA DEL DEPARTAMENTO DE SERVICIOS ESCOLARES<br>LIC. VIRGINIA GRISELDA BAYLON SAENZ.
+      <p-inplace>
+      <span pInplaceDisplay>
+        <span ><span class="pi pi-image"></span>Ver foto</span>
+    </span>
+        <span pInplaceContent>
+        <img src="assets/img/vicky.jpg" style="width: 30%"  >
+    </span>
+      </p-inplace>
+
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-1" >
+      <!--- accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"-->
+      <input type="file"  accept="image/*" (change)="getExcel($event)">
+      <!--p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUpload($event)"  ></p-fileUpload-->
+    </div>
+    <div class="ui-g-3">
+
+
+
+      <!--div class="first" style="margin-top: 5%">2020-EneroBecasSubes.xls</div-->
+
+
+
+
+    </div>
+
+
+
+    <div class="ui-g-12 ui-g-nopad" >
+      <div class="ui-g-2" ></div>
+      <div class="ui-g-8" id="image"><!--img src="assets/img/chart.png" style=" width:78%; margin-left: 9%; " ></div-->
+        <div echarts [options]="options" ></div><div class="ui-g-2" ></div>
+    </div>
+
+    <div class="ui-g-12 ui-g-nopad">
+      <div class="ui-g-2" ></div>
+      <div class="ui-g-3" ></div>
+      <div class="ui-g-3"  ><button pButton icon="pi pi-file-o" type="button" label="Generar PDF"  [disabled]="estadisticas" class="ui-button-raised ui-button-danger" style="  margin-left: 12%; "></button></div>
+      <div class="ui-g-2" ></div>
+      <div class="ui-g-2" ></div>
+    </div>
+
+  </div>
+{{imgBase64}}

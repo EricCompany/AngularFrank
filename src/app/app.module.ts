@@ -20,6 +20,9 @@ import {InplaceModule} from 'primeng/inplace';
 import {TreeModule} from 'primeng/tree';
 import {FileUploadModule} from 'primeng/fileupload';
 
+// Echarts
+import { NgxEchartsModule } from 'ngx-echarts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +50,7 @@ import {FileUploadModule} from 'primeng/fileupload';
     InplaceModule,
     TreeModule,
     FileUploadModule,
+    NgxEchartsModule
 
   ],
   providers: [FormBuilder],

@@ -26,6 +26,10 @@ export class LoginServiceService {
     return  this.http.post(this.endpoint.getEndPoint() + 'Login/registrar.php', User, );
   }
 
+  recoveryPass(email: FormData): Observable<any> {
+    return this.http.post(this.endpoint.getEndPoint() + 'RecoveryPassword/recuperar.php', email, );
+  }
+
 
 }
 

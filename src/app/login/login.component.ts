@@ -83,19 +83,34 @@ export class LoginComponent implements OnInit {
 
   confirm1() {
     let formData = new FormData();
-    formData.append('user', this.checkoutForm.value.user);
+    if (this.checkoutForm.value.user === null || this.checkoutForm.value.user === '' || this.checkoutForm.value.user === undefined) {
+      this.msgs = [];
+      this.msgs = [{severity: 'error', summary: 'Correo Invalido.', detail: ''}];
+      return;
+    }
 
-    this.confirmationService.confirm({
-      message: 'Deseas Recuperar tu contraseña?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.msgs = [{severity:'success', summary:'Confirmed', detail:'Se ha enviado tu contraseña al correo que ingresaste'}];
-      },
-      reject: () => {
-        this.msgs = [{severity:'error', summary:'Rejected', detail:'Cancelaste la recuperacion de contraseña'}];
-      }
-    });
+      formData.append('email', this.checkoutForm.value.user);
+
+      this.confirmationService.confirm({
+        message: 'Deseas Recuperar tu contraseña?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.http.recoveryPass(formData).subscribe(
+            (resp) => {
+              this.msgs = [];
+              this.msgs = [{severity: 'success', summary: 'Confirmed', detail: 'Se ha enviado tu contraseña al correo que ingresaste'}];
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        },
+        reject: () => {
+          this.msgs = [];
+          this.msgs = [{severity: 'error', summary: 'Rejected', detail: 'Cancelaste la recuperacion de contraseña'}];
+        }
+      });
   }
 
 

@@ -16,4 +16,8 @@ export class ServiceBecasService {
     return this.http.post(this.endpoint.getEndPoint() + 'PDF/mypdf.php', File, {responseType: 'arraybuffer'});
    // return this.http.post('http://52.170.42.232/fito/mypdf.php', File, {responseType: 'arraybuffer'});
   }
+
+  sendExcel(file: FormData): Observable<any> {
+    return this.http.post(this.endpoint.getEndPoint() + 'AnalisisExcel/revexcele.php', file, );
+  };
 }

@@ -18,6 +18,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 import {Estadisticas} from '../../DTO/Estadisticas';
 
+import {ResponseDTO} from '../../DTO/ResponseDTO';
 
 
 
@@ -35,9 +36,12 @@ export class BecasSubesComponent implements OnInit {
 
   estadisticas: Estadisticas[];
   respBlob: any;
-
+  resp: ResponseDTO;
+  data: any[];
+  dataTitle: any[];
   @BlockUI() blockUI: NgBlockUI;
-
+  imgF = new Image();
+  optionsM: any;
 
 
   constructor(public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) {
@@ -51,49 +55,89 @@ export class BecasSubesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.DrawGrafica();
+    this.data = [];
+    this.dataTitle = [];
+    this.dataTitle.push('INGENIERIA EN SISTEMAS COMPUTACIONALES');
+    this.dataTitle.push('IINGENIERIA INDUSTRIAL');
+    this.dataTitle.push('INGENIERIA EN GESTION EMPRESARIAL');
+    this.dataTitle.push('INGENIERIA MECATRONICA');
+    this.dataTitle.push('CONTADOR PUBLICO');
+    this.dataTitle.push('INGENIERIA ELECTRONICA');
+
+
+
+    this.data.push({value: 0, name: 'INGENIERIA EN SISTEMAS COMPUTACIONALES \n Hombes: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'IINGENIERIA INDUSTRIAL \n Hombes: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'INGENIERIA EN GESTION EMPRESARIAL \n Hombes: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'INGENIERIA MECATRONICA \n Hombes: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'ICONTADOR PUBLICO \n Hombes: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'INGENIERIA ELECTRONICA \n Hombes: 0 \n Mujeres: 0'});
+    this.DrawGrafica(this.dataTitle, this.data);
   }
 
   getExcel(event) {
-    this.estadisticas = [];
+    this.blockUI.start('Procesando Excel...'); // Start blocking
+    let formdata = new FormData();
+    formdata.append('excel', event.target.files[0], event.target.files[0].name);
+
+    this.http.sendExcel(formdata).subscribe(
+      (resp) => {
+        this.resp = resp;
+        if(this.resp.status) {
+          this.estadisticas = [];
+          this.estadisticas = this.resp.data as Estadisticas[];
+          console.log(JSON.stringify(this.estadisticas));
+          this.data = [];
+          this.dataTitle = [];
+          this.estadisticas.forEach( v => {
+            this.dataTitle.push(v.nameCarrera );
+            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombes: '+ v.hombres + '\n Mujeres:' + v.mujeres});
+          });
+          this.DrawGrafica(this.dataTitle, this.data);
+        }else {
+            console.log(this.resp.msg);
+        }
+        this.blockUI.stop();
+      },
+      (error) => {
+        console.log(error);
+        this.blockUI.stop();
+      }
+    );
   }
 
   getPDF(){
+    this.blockUI.start('Generando PDF...'); // Start blocking
     // Variables
     let formData = new FormData();
     let node = document.getElementById('image');
     let img = new Image();
 
     // Get Foto de Grafica
-    htmlToImage.toPng(node)
-      .then(function (dataUrl): any {
+   htmlToImage.toPng(node).then(
+     (imgbase64) => {
 
-        img.src = dataUrl;
-        sessionStorage.setItem('img', img.src);
+        this.imgF.src = imgbase64;
 
         // document.body.appendChild(img);
         //  this.img.src = dataUrl;
-      }).catch(function (error) {
+
+       // Save in FormData
+       // formData.append('imagen', event.target.files[0], 'grafica.png');
+       formData.append('imagen', this.imgF.src);
+
+       // Call Service
+         this.GeneratePDF(formData);
+
+      }
+      ).catch(function (error) {
       console.error('oops, something went wrong!', error);
     });
 
-    // Get Img Base64
-    this.imgBase64 = sessionStorage.getItem('img');
-
-    // Save in FormData
-    // formData.append('imagen', event.target.files[0], 'grafica.png');
-    formData.append('imagen', this.imgBase64);
-
-    // Delete BASE64 IMG Session
-    sessionStorage.removeItem('img');
-
-
-    // Call Service
-    this.GeneratePDF(formData);
   }
 
   GeneratePDF(File: FormData) {
-    this.blockUI.start('Generando PDF...'); // Start blocking
+    // this.blockUI.start('Generando PDF...'); // Start blocking
 
     this.http.getPDF(File).subscribe(
       (resp) => {
@@ -116,8 +160,34 @@ export class BecasSubesComponent implements OnInit {
     );
   }
 
-  DrawGrafica() {
+  DrawGrafica(dataTitle: any, Data: any) {
     this.options = {
+
+
+
+      plugins: {
+        datalabels: {
+          color: 'white',
+          backgroundColor: function(context) {
+            return context.dataset.backgroundColor;
+          },
+          borderRadius: 5,
+          display: function(context) {
+            return context.dataset.data[context.dataIndex] > 0;
+          },
+          font: {
+            weight: 'bold',
+            size: 14,
+            color: "black"
+          },
+          formatter: function(value, context,ap ='<?php echo json_encode($CalMat) ?>',rp ='<?php echo json_encode($CalMatR) ?>') {
+            //para aprobados
+
+            return   '8%';
+          }
+        }
+      },
+
       title: {
         text: 'Estadisticas Becas Subes',
       //  subtext: '纯属虚构',
@@ -130,7 +200,7 @@ export class BecasSubesComponent implements OnInit {
       legend: {
         orient: 'vertical',
         left: 'left',
-        data: ['Ing. Sistemas Computacionales', 'Contador Publico', 'Mecatronica']
+        data: [dataTitle]
       },
       series: [
         {
@@ -138,11 +208,7 @@ export class BecasSubesComponent implements OnInit {
           type: 'pie',
           radius: '55%',
           center: ['50%', '60%'],
-          data: [
-            {value: 10, name: 'Ing. Sistemas Computacionales \n 5 Hombre \n 5 Mujeres'},
-            {value: 13, name: 'Contador Publico \n 8 Hombre \n 5 Mujeres'},
-            {value: 15, name: 'Mecatronica  \n 8 Hombre \n 7 Mujeres '}
-          ],
+          data: Data,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -153,4 +219,5 @@ export class BecasSubesComponent implements OnInit {
         }
       ]
     };
+    this.optionsM = this.options;
   }}

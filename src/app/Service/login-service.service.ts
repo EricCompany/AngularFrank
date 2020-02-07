@@ -18,7 +18,7 @@ export class LoginServiceService {
   constructor(private http: HttpClient, private endpoint: ConfigService) { }
 
   Login(User: FormData): Observable<any> {
-    return this.http.post(this.endpoint.getEndPoint() + 'Login/login.php', User, HEADER);
+    return this.http.post(this.endpoint.getEndPoint() + 'Login/login.php', User, );
   }
 
 

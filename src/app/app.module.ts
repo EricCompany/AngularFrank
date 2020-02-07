@@ -26,6 +26,11 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import {StepsModule} from 'primeng/steps';
 import {MenuItem} from 'primeng/api';
 import { MenuMainComponent } from './Menu/menu-main/menu-main.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -38,6 +43,8 @@ import { MenuMainComponent } from './Menu/menu-main/menu-main.component';
     MenuMainComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    ConfirmDialogModule,
     BrowserModule,
     AppRoutingModule,
     CardModule,
@@ -57,10 +64,11 @@ import { MenuMainComponent } from './Menu/menu-main/menu-main.component';
     FileUploadModule,
     NgxEchartsModule,
     StepsModule,
-    BlockUIModule.forRoot()
+    BlockUIModule.forRoot(),
+    NoopAnimationsModule
 
   ],
-  providers: [FormBuilder],
+  providers: [FormBuilder, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

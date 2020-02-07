@@ -48,6 +48,15 @@ export class MenuMainComponent implements OnInit {
           this.app.activeIndex = 2;
           //this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label});
         }
+      },
+      {
+        label: 'Cerrar Sesión',
+        command: (event: any) => {
+          this.app.activeIndex = 0;
+          sessionStorage.removeItem('DataUser');
+          this.router.navigate(['/']);
+          //this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label});
+        }
       }
     ];
   }

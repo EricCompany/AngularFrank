@@ -13,21 +13,28 @@ import {MessageService} from 'primeng/api';
 // Block
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
+// Confirmacion
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers:[MessageService]
+  providers:[ MessageService, ConfirmationService]
 })
 export class LoginComponent implements OnInit {
   checkoutForm;
   resp: ResponseDTO;
   msgs: Message[] = [];
 
+
   @BlockUI() blockUI: NgBlockUI;
 
   // Variabler globales form
-  constructor( private messageService: MessageService, private form: FormBuilder, private http: LoginServiceService, private router: Router) {
+  constructor( private confirmationService: ConfirmationService, private messageService: MessageService, private form: FormBuilder, private http: LoginServiceService, private router: Router) {
+
 
     //  creamos el Form
     this.checkoutForm = this.form.group({
@@ -58,7 +65,7 @@ export class LoginComponent implements OnInit {
            this.router.navigate(['/ModuloBecas']);
          }else{
            this.msgs = [];
-           this.msgs.push({severity: 'error', summary: this.resp.msg, detail: 'PrimeNG rocks'});
+           this.msgs.push({severity: 'error', summary: this.resp.msg, detail: ''});
            // console.log();
          }
         this.blockUI.stop();
@@ -70,5 +77,26 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+
+
+
+  confirm1() {
+    let formData = new FormData();
+    formData.append('user', this.checkoutForm.value.user);
+
+    this.confirmationService.confirm({
+      message: 'Deseas Recuperar tu contraseña?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.msgs = [{severity:'success', summary:'Confirmed', detail:'Se ha enviado tu contraseña al correo que ingresaste'}];
+      },
+      reject: () => {
+        this.msgs = [{severity:'error', summary:'Rejected', detail:'Cancelaste la recuperacion de contraseña'}];
+      }
+    });
+  }
+
 
 }

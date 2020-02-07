@@ -13,7 +13,7 @@ export class ServiceBecasService {
   constructor(private http: HttpClient, private endpoint: ConfigService) { }
 
   getPDF(File: FormData): Observable<any> {
-   // return this.http.post(this.endpoint.getEndPoint() + 'PDF/mypdf.php', File, {responseType: 'arraybuffer'});
-    return this.http.post('http://52.170.42.232/fito/mypdf.php', File, {responseType: 'arraybuffer'});
+    return this.http.post(this.endpoint.getEndPoint() + 'PDF/mypdf.php', File, {responseType: 'arraybuffer'});
+   // return this.http.post('http://52.170.42.232/fito/mypdf.php', File, {responseType: 'arraybuffer'});
   }
 }

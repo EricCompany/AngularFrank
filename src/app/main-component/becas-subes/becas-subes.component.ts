@@ -12,6 +12,7 @@ import * as echarts from 'echarts';
 import ECharts = echarts.ECharts;
 import {MainComponentComponent} from "../main-component.component";
 
+
 // Block
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -40,6 +41,11 @@ export class BecasSubesComponent implements OnInit {
 
   constructor(public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) {
     this.app.activeIndex = 0;
+
+    let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
+    if(dataUser === null){
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit() {
@@ -48,6 +54,7 @@ export class BecasSubesComponent implements OnInit {
   }
 
   getExcel(event) {
+    this.estadisticas = [];
   }
 
   getPDF(){
@@ -78,7 +85,7 @@ export class BecasSubesComponent implements OnInit {
 
     // Delete BASE64 IMG Session
     sessionStorage.removeItem('img');
-    this.estadisticas = [];
+
 
     // Call Service
     this.GeneratePDF(formData);

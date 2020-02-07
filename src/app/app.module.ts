@@ -19,10 +19,19 @@ import {InplaceModule} from 'primeng/inplace';
 import {TreeModule} from 'primeng/tree';
 import {FileUploadModule} from 'primeng/fileupload';
 
-
+import { BlockUIModule } from 'ng-block-ui';
 // Echarts
 import { NgxEchartsModule } from 'ngx-echarts';
 import { FormRegistroComponent } from './registro/form-registro/form-registro.component';
+
+import {StepsModule} from 'primeng/steps';
+import {MenuItem} from 'primeng/api';
+import { MenuMainComponent } from './Menu/menu-main/menu-main.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -32,9 +41,12 @@ import { FormRegistroComponent } from './registro/form-registro/form-registro.co
     MainComponentComponent,
     MenuPrincipalComponent,
     BecasSubesComponent,
-    FormRegistroComponent
+    FormRegistroComponent,
+    MenuMainComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    ConfirmDialogModule,
     BrowserModule,
     AppRoutingModule,
     CardModule,
@@ -53,10 +65,12 @@ import { FormRegistroComponent } from './registro/form-registro/form-registro.co
     TreeModule,
     FileUploadModule,
     NgxEchartsModule,
-    FileUploadModule
+    StepsModule,
+    BlockUIModule.forRoot(),
+    NoopAnimationsModule
 
   ],
-  providers: [FormBuilder],
+  providers: [FormBuilder, ConfirmationService],
   bootstrap: [AppComponent]
 })
 

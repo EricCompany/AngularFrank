@@ -15,6 +15,7 @@
   </div>
 </div>
 <br>
+
   <div class="ui-g">
     <div class="ui-inputgroup">
       <span class="ui-inputgroup-addon"><i class="pi pi-lock" style="line-height: 1.25"></i></span>
@@ -22,10 +23,10 @@
       <input type="password" formControlName="password" pPassword style=" width:350px;" placeholder=" Ingresa tu clave de acceso"/>
     </div>
   </div>
-  <br>
+  <br>    <br><br><br>
   <div class="ui-g">
     <div class="ui-md-7">
-    <div class="ui-inputgroup">¿Has olvidado tu contraseña?
+      <div class="ui-inputgroup" > <a  (click)="confirm1()" > ¿Has olvidado tu contraseña?</a>
     </div>
     </div>
     <div class="ui-md-5">
@@ -37,7 +38,7 @@
 
 
 </form>
-
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
   <p-messages [(value)]="msgs"></p-messages>
 </p-card>
   </div>

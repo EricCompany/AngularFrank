@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {LoginComponent} from './login/login.component';
@@ -20,8 +19,10 @@ import {InplaceModule} from 'primeng/inplace';
 import {TreeModule} from 'primeng/tree';
 import {FileUploadModule} from 'primeng/fileupload';
 
+
 // Echarts
 import { NgxEchartsModule } from 'ngx-echarts';
+import { FormRegistroComponent } from './registro/form-registro/form-registro.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     HeaderComponent,
     MainComponentComponent,
     MenuPrincipalComponent,
-    BecasSubesComponent
+    BecasSubesComponent,
+    FormRegistroComponent
   ],
   imports: [
     BrowserModule,
@@ -50,10 +52,13 @@ import { NgxEchartsModule } from 'ngx-echarts';
     InplaceModule,
     TreeModule,
     FileUploadModule,
-    NgxEchartsModule
+    NgxEchartsModule,
+    FileUploadModule
 
   ],
   providers: [FormBuilder],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+

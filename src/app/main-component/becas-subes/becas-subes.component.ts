@@ -20,6 +20,8 @@ export class BecasSubesComponent implements OnInit {
   options: any;
   imgBase64: string;
   estadisticas: any;
+  respBlob:any;
+
 
   constructor(private http: ServiceBecasService) { }
 

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 // Serivice
 import {ConfigService} from './config.service';
+import {url} from 'inspector';
 
 
 @Injectable({
@@ -14,6 +15,10 @@ export class LoginServiceService {
 
   Login(User: FormData): Observable<any> {
     return this.http.post(this.endpoint.getEndPoint() + 'Login/login.php', User, '');
+  }
+
+  Registro(User: FormData): Observable<any>{
+    return  this.http.post(url(this.endpoint.getEndPoint() + '', User, '');
   }
 
 

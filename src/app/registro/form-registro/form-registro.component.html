@@ -1,0 +1,83 @@
+<app-header></app-header>
+
+
+<div class="ui-g">
+  <div class="ui-g-12 ui-g-nopad">
+
+
+    <div class="ui-g-4"></div><!--Espacio 4 -->
+
+    <div class="ui-g-4">
+      <p-card header="Registro nuevo usuario" subheader="Proporciona los datos solicitados para crear una cuenta.">
+<br>
+
+
+        <form [formGroup]="formRegistro" novalidate>
+        <div class="ui-g ui-fluid">
+          <div class="ui-g-12 ">
+            <div class="ui-inputgroup" style="margin-bottom: 1%">
+              <label>Correo electrónico*:</label>
+            </div>
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+              <input  formControlName="correo" type="text" pInputText size="47" placeholder=" Ejemplo@cuautla.tecnm.mx" >
+            </div>
+          </div>
+        </div>
+        <div class="ui-g ui-fluid">
+          <div class="ui-g-12 ">
+            <div class="ui-inputgroup" style="margin-bottom: 1%">
+              <label>Contraseña*:</label>
+            </div>
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+              <input formControlName="pass" type="password" pInputText placeholder=" 8 caracteres mínimo" pPassword >
+            </div>
+          </div>
+        </div>
+        <div class="ui-g ui-fluid">
+          <div class="ui-g-12 ">
+            <div class="ui-inputgroup" style="margin-bottom: 1%">
+              <label>Confirmar contraseña*:</label>
+            </div>
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+              <input formControlName="pass2" type="password" pInputText placeholder=" Las contraseñas deben coincidir" pPassword >
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="ui-g ui-fluid">
+          <div class="ui-g-12 ">
+            <div class="ui-inputgroup" style="margin-bottom: 1%">
+              <label>Tipo de usuario*:</label>
+            </div>
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon"><i class="pi pi-users" style="line-height: 1.25;"></i></span>
+              <input  type="text" pInputText size="47" placeholder=" " >
+            </div>
+          </div>
+        </div>-->
+<br><br>
+        <div class="ui-g ui-fluid">
+          <div class="ui-g-12">
+            <div class="ui-inputgroup ui-g-6"><a [routerLink]="['/']">Prefiero iniciar sesión</a></div>
+            <div class="ui-inputgroup ui-g-6">
+              <button pButton type="button" label="Registrar" icon="pi pi-pencil" style="width: 200px" [disabled]="!formRegistro.valid" (click)="registro()" ></button>
+            </div>
+          </div>
+        </div>
+        </form>
+  <p-footer>
+   <!-- Footer content here-->
+  </p-footer>
+
+
+        <p-messages [(value)]="msgs"></p-messages>
+</p-card></div>
+  </div>
+</div>
+<div class="ui-g-4"></div><!--Espacio 4 -->
+<!--  type="password" pPassword [showPassword]="viewPass" -->
+
+

@@ -19,6 +19,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import {Estadisticas} from '../../DTO/Estadisticas';
 
 import {ResponseDTO} from '../../DTO/ResponseDTO';
+import {Modulo1Excel} from "../../DTO/modulo1Excel";
 
 
 
@@ -43,6 +44,9 @@ export class BecasSubesComponent implements OnInit {
   imgF = new Image();
   optionsM: any;
 
+  cities: Modulo1Excel[];
+  selectedCity: any;
+  OptionSelected: any;
 
   constructor(public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) {
     this.app.activeIndex = 0;
@@ -51,10 +55,11 @@ export class BecasSubesComponent implements OnInit {
     if(dataUser === null){
       this.router.navigate(['/']);
     }
+
   }
 
   ngOnInit() {
-
+    this.getCatFile();//select
     this.data = [];
     this.dataTitle = [];
     this.dataTitle.push('INGENIERIA EN SISTEMAS COMPUTACIONALES');
@@ -66,12 +71,12 @@ export class BecasSubesComponent implements OnInit {
 
 
 
-    this.data.push({value: 0, name: 'INGENIERIA EN SISTEMAS COMPUTACIONALES \n Hombes: 0 \n Mujeres: 0'});
-    this.data.push({value: 0, name: 'IINGENIERIA INDUSTRIAL \n Hombes: 0 \n Mujeres: 0'});
-    this.data.push({value: 0, name: 'INGENIERIA EN GESTION EMPRESARIAL \n Hombes: 0 \n Mujeres: 0'});
-    this.data.push({value: 0, name: 'INGENIERIA MECATRONICA \n Hombes: 0 \n Mujeres: 0'});
-    this.data.push({value: 0, name: 'ICONTADOR PUBLICO \n Hombes: 0 \n Mujeres: 0'});
-    this.data.push({value: 0, name: 'INGENIERIA ELECTRONICA \n Hombes: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'INGENIERIA EN SISTEMAS COMPUTACIONALES \n Hombres: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'IINGENIERIA INDUSTRIAL \n Hombres: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'INGENIERIA EN GESTION EMPRESARIAL \n Hombres: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'INGENIERIA MECATRONICA \n Hombres: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'ICONTADOR PUBLICO \n Hombres: 0 \n Mujeres: 0'});
+    this.data.push({value: 0, name: 'INGENIERIA ELECTRONICA \n Hombres: 0 \n Mujeres: 0'});
     this.DrawGrafica(this.dataTitle, this.data);
   }
 
@@ -81,7 +86,8 @@ export class BecasSubesComponent implements OnInit {
     formdata.append('excel', event.target.files[0], event.target.files[0].name);
 
     this.http.sendExcel(formdata).subscribe(
-      (resp) => {
+      (resp) => {//si es estutus 200 ejecuta
+        this.getCatFile();//select
         this.resp = resp;
         if(this.resp.status) {
           this.estadisticas = [];
@@ -91,7 +97,7 @@ export class BecasSubesComponent implements OnInit {
           this.dataTitle = [];
           this.estadisticas.forEach( v => {
             this.dataTitle.push(v.nameCarrera );
-            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombes: '+ v.hombres + '\n Mujeres:' + v.mujeres});
+            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombres: '+ v.hombres + '\n Mujeres:' + v.mujeres});
           });
           this.DrawGrafica(this.dataTitle, this.data);
         }else {
@@ -100,7 +106,8 @@ export class BecasSubesComponent implements OnInit {
         this.blockUI.stop();
       },
       (error) => {
-        console.log(error);
+
+        console.log('skdzksdb');
         this.blockUI.stop();
       }
     );
@@ -220,4 +227,48 @@ export class BecasSubesComponent implements OnInit {
       ]
     };
     this.optionsM = this.options;
-  }}
+  }
+
+  getCatFile() {
+    this.http.getFiles().subscribe(
+      (v) => {
+        this.cities = v;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getEstadisticas(){
+
+  }
+
+  graficar() {
+    //console.log(JSON.stringify(this.OptionSelected));
+    this.http.graficarSelect(this.OptionSelected).subscribe(
+      (resp) => {
+        this.resp = resp;
+        if(this.resp.status) {
+          this.estadisticas = [];
+          this.estadisticas = this.resp.data as Estadisticas[];
+          console.log(JSON.stringify(this.estadisticas));
+          this.data = [];
+          this.dataTitle = [];
+          this.estadisticas.forEach( v => {
+            this.dataTitle.push(v.nameCarrera );
+            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombres: '+ v.hombres + '\n Mujeres:' + v.mujeres});
+          });
+          this.DrawGrafica(this.dataTitle, this.data);
+        }else {
+          console.log(this.resp.msg);
+        }
+        this.blockUI.stop();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+}

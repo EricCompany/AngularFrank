@@ -8,7 +8,7 @@ import {CardModule} from 'primeng/card';
 import { HeaderComponent } from './header/header.component';
 import {ButtonModule} from 'primeng/button';
 import {PasswordModule} from 'primeng/password';
-import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MainComponentComponent } from './main-component/main-component.component';
 import { MenuPrincipalComponent } from './main-component/menu-principal/menu-principal.component';
 import { BecasSubesComponent } from './main-component/becas-subes/becas-subes.component';
@@ -18,8 +18,9 @@ import {ToastModule} from 'primeng/toast';
 import {InplaceModule} from 'primeng/inplace';
 import {TreeModule} from 'primeng/tree';
 import {FileUploadModule} from 'primeng/fileupload';
-
+import {ToggleButtonModule} from 'primeng/togglebutton';
 import { BlockUIModule } from 'ng-block-ui';
+import {DropdownModule} from 'primeng/dropdown';
 // Echarts
 import { NgxEchartsModule } from 'ngx-echarts';
 import { FormRegistroComponent } from './registro/form-registro/form-registro.component';
@@ -51,6 +52,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     CardModule,
     ButtonModule,
+    ToggleButtonModule,
+    DropdownModule,
     PasswordModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -67,7 +70,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxEchartsModule,
     StepsModule,
     BlockUIModule.forRoot(),
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    FormsModule
 
   ],
   providers: [FormBuilder, ConfirmationService],

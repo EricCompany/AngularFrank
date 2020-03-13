@@ -4,6 +4,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 // Serivice
 import {ConfigService} from '../config.service';
+import {Modulo1Excel} from '../../DTO/modulo1Excel';
+
+const HEADER = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  }),
+};
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +25,14 @@ export class ServiceBecasService {
   }
 
   sendExcel(file: FormData): Observable<any> {
-    return this.http.post(this.endpoint.getEndPoint() + 'AnalisisExcel/revexcele.php', file, );
-  };
+    return this.http.post(this.endpoint.getEndPoint() + 'BecasSubes/mod1_registrarExcel.php', file );
+  }
+
+  getFiles(): Observable<Modulo1Excel[]> {
+    return this.http.get<Modulo1Excel[]>(this.endpoint.getEndPoint() + 'BecasSubes/mod1_enviarSelect.php', );
+  }
+
+  graficarSelect(opc: number): Observable<any> {
+    return this.http.post(this.endpoint.getEndPoint() + 'BecasSubes/mod1_graficarSelect.php', opc, HEADER );
+  }
 }

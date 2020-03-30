@@ -10,7 +10,7 @@ import {ServiceBecasService} from '../../Service/Modulo1/service-becas.service';
 // Echarts
 import * as echarts from 'echarts';
 import ECharts = echarts.ECharts;
-import {MainComponentComponent} from "../main-component.component";
+import {MainComponentComponent} from '../main-component.component';
 
 
 // Block
@@ -19,20 +19,23 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import {Estadisticas} from '../../DTO/Estadisticas';
 
 import {ResponseDTO} from '../../DTO/ResponseDTO';
-import {Modulo1Excel} from "../../DTO/modulo1Excel";
+import {Modulo1Excel} from '../../DTO/modulo1Excel';
 
+import {ConfirmationService, Message, MessageService} from 'primeng/api';
 
 
 
 @Component({
   selector: 'app-becas-subes',
   templateUrl: './becas-subes.component.html',
-  styleUrls: ['./becas-subes.component.css']
+  styleUrls: ['./becas-subes.component.css'],
+  providers: [MessageService, ConfirmationService]
 
 })
 export class BecasSubesComponent implements OnInit {
 
   options: any;
+  file: any[];
   imgBase64: string;
 
   estadisticas: Estadisticas[];
@@ -43,22 +46,23 @@ export class BecasSubesComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   imgF = new Image();
   optionsM: any;
+  showButton = false;
 
   cities: Modulo1Excel[];
   selectedCity: any;
   OptionSelected: any;
-
-  constructor(public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) {
+  msgs: Message[] = [];
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) {
     this.app.activeIndex = 0;
-
     let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
-    if(dataUser === null){
+    if (dataUser === null){
       this.router.navigate(['/']);
     }
 
   }
 
   ngOnInit() {
+
     this.getCatFile();//select
     this.data = [];
     this.dataTitle = [];
@@ -80,16 +84,28 @@ export class BecasSubesComponent implements OnInit {
     this.DrawGrafica(this.dataTitle, this.data);
   }
 
-  getExcel(event) {
+  setFile($event) {
+
+    if ($event === null || $event === undefined ) {
+      this.showButton = false;
+    } else {
+      this.file = $event;//asignar a la variable file
+      this.showButton = true;
+    }
+  }
+
+  getExcel(event) {//recibe la variable file
     this.blockUI.start('Procesando Excel...'); // Start blocking
+    if ( event.target.files[0] === null ||  event.target.files[0] === undefined) {
+      this.blockUI.stop();
+    } else {
     let formdata = new FormData();
     formdata.append('excel', event.target.files[0], event.target.files[0].name);
-
     this.http.sendExcel(formdata).subscribe(
       (resp) => {//si es estutus 200 ejecuta
         this.getCatFile();//select
         this.resp = resp;
-        if(this.resp.status) {
+        if (this.resp.status) {
           this.estadisticas = [];
           this.estadisticas = this.resp.data as Estadisticas[];
           console.log(JSON.stringify(this.estadisticas));
@@ -100,18 +116,22 @@ export class BecasSubesComponent implements OnInit {
             this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombres: '+ v.hombres + '\n Mujeres:' + v.mujeres});
           });
           this.DrawGrafica(this.dataTitle, this.data);
-        }else {
-            console.log(this.resp.msg);
+        } else {
+           // console.log(this.resp.msg);
+          this.msgs = [];
+          this.msgs.push({severity: 'error', summary: this.resp.msg, detail: ''});
         }
         this.blockUI.stop();
       },
       (error) => {
+        this.msgs = [];
+        this.msgs.push({severity: 'error', summary: error.error.msg, detail: ''});
+        //this.messageService.add({severity:'success', summary: 'Success Message', detail:'Order submitted'});
 
-        console.log('skdzksdb');
         this.blockUI.stop();
       }
     );
-  }
+  }}
 
   getPDF(){
     this.blockUI.start('Generando PDF...'); // Start blocking
@@ -230,6 +250,8 @@ export class BecasSubesComponent implements OnInit {
   }
 
   getCatFile() {
+
+
     this.http.getFiles().subscribe(
       (v) => {
         this.cities = v;

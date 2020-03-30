@@ -15,6 +15,7 @@ import { BecasSubesComponent } from './main-component/becas-subes/becas-subes.co
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 import {InplaceModule} from 'primeng/inplace';
 import {TreeModule} from 'primeng/tree';
 import {FileUploadModule} from 'primeng/fileupload';

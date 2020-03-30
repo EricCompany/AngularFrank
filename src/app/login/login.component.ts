@@ -22,7 +22,7 @@ import {ConfirmationService} from 'primeng/api';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers:[ MessageService, ConfirmationService]
+  providers: [ MessageService, ConfirmationService]
 })
 export class LoginComponent implements OnInit {
   checkoutForm;
@@ -60,10 +60,10 @@ export class LoginComponent implements OnInit {
       (resp) => {
         this.resp = resp;
 
-         if(this.resp.status){
+         if (this.resp.status) {
            sessionStorage.setItem('DataUser',  JSON.stringify(this.resp.data));
            this.router.navigate(['/ModuloBecas']);
-         }else{
+         } else {
            this.msgs = [];
            this.msgs.push({severity: 'error', summary: this.resp.msg, detail: ''});
            // console.log();
@@ -108,10 +108,18 @@ export class LoginComponent implements OnInit {
         },
         reject: () => {
           this.msgs = [];
-          this.msgs = [{severity: 'error', summary: 'Rejected', detail: 'Cancelaste la recuperacion de contraseña'}];
+          this.msgs = [{severity: 'error', summary: 'Rejected', detail: 'Cancelaste la recuperación de contraseña'}];
         }
       });
   }
+  keyPress(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
 
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
 
 }

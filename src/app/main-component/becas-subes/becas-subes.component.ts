@@ -48,6 +48,7 @@ export class BecasSubesComponent implements OnInit {
   optionsM: any;
   showButton = false;
 
+
   cities: Modulo1Excel[];
   selectedCity: any;
   OptionSelected: any;
@@ -62,7 +63,6 @@ export class BecasSubesComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.getCatFile();//select
     this.data = [];
     this.dataTitle = [];
@@ -85,13 +85,14 @@ export class BecasSubesComponent implements OnInit {
   }
 
   setFile($event) {
-
-    if ($event === null || $event === undefined ) {
-      this.showButton = false;
-    } else {
-      this.file = $event;//asignar a la variable file
+    this.showButton = true;
+    if ($event.target.files[0]) {
       this.showButton = true;
+      this.file = $event;
+} else {
+      this.showButton = false;
     }
+
   }
 
   getExcel(event) {//recibe la variable file

@@ -20,19 +20,29 @@ import {InplaceModule} from 'primeng/inplace';
 import {TreeModule} from 'primeng/tree';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ToggleButtonModule} from 'primeng/togglebutton';
-import { BlockUIModule } from 'ng-block-ui';
 import {DropdownModule} from 'primeng/dropdown';
-// Echarts
-import { NgxEchartsModule } from 'ngx-echarts';
-import { FormRegistroComponent } from './registro/form-registro/form-registro.component';
 
-import {StepsModule} from 'primeng/steps';
 import {MenuItem} from 'primeng/api';
 import { MenuMainComponent } from './Menu/menu-main/menu-main.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TablaComponent } from './main-component/tabla/tabla.component';
+import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import {FieldsetModule} from 'primeng/fieldset';
+import { TableModule } from 'primeng/table';
+
+
+import { BlockUIModule } from 'ng-block-ui';
+// Echarts
+import { NgxEchartsModule } from 'ngx-echarts';
+import { FormRegistroComponent } from './registro/form-registro/form-registro.component';
+
+import { StepsModule } from 'primeng/steps';
+
+
 
 
 @NgModule({
@@ -44,8 +54,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MenuPrincipalComponent,
     BecasSubesComponent,
     FormRegistroComponent,
-    MenuMainComponent
-  ],
+    MenuMainComponent,
+    TablaComponent
+    ],
   imports: [
     BrowserAnimationsModule,
     ConfirmDialogModule,
@@ -72,7 +83,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StepsModule,
     BlockUIModule.forRoot(),
     NoopAnimationsModule,
-    FormsModule
+    FormsModule,
+    CommonModule,
+    DialogModule,
+    FieldsetModule,
+    TableModule,
+    
 
   ],
   providers: [FormBuilder, ConfirmationService],

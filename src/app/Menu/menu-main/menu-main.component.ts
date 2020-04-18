@@ -32,6 +32,7 @@ export class MenuMainComponent implements OnInit {
         label: 'Becas Subes',
         command: (event: any) => {
           this.app.activeIndex = 0;
+          this.router.navigate(['/ModuloBecas/BecasSubes']);
           //this.messageService.add({severity:'info', summary:'Seat Selection', detail: event.item.label});
         }
       },
@@ -39,6 +40,7 @@ export class MenuMainComponent implements OnInit {
         label: 'Libros de Titulacion',
         command: (event: any) => {
           this.app.activeIndex = 1;
+          this.router.navigate(['/ModuloBecas/LibrosTitulacion']);
           //   this.messageService.add({severity:'info', summary:'Pay with CC', detail: event.item.label});
         }
       },

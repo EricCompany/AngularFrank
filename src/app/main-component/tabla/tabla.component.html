@@ -1,0 +1,113 @@
+<block-ui>
+    <app-menu-main></app-menu-main>
+
+    <div class="fluid-container ">
+
+        <div class="ui-g ">
+            <div class="ui-g-4 borde">
+
+                <input (change)="mostrar = true" id="sel" [(ngModel)]="seleccionado" class="custom-file-input" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getDateTable($event)">
+                <button *ngIf="mostrar" pButton type="button" (click)="uploadFileToActivity()" label="Subir"></button>
+                <p-toast key="excel" position="top-center"></p-toast>
+            </div>
+            <div class="ui-g-3  borde">
+                <form [formGroup]="Data">
+                    <div class="ui-inputgroup">
+                        <input type="text" formControlName="data" pInputText placeholder="buscar">
+                        <button pButton type="button" (click)="Consult()" label="buscar"></button>
+                    </div>
+                    <p-toast key="buscador" position="top-right"></p-toast>
+                </form>
+            </div>
+            <div class="ui-g-2 borde">
+                <p-dropdown [options]="cities" [(ngModel)]="opcionSeleccionadoGrafica" (onChange)="Grafica1()" placeholder="GRAFICA 1" optionLabel="nombre" [showClear]="false"></p-dropdown>
+                <p-dialog header="Godfather I" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '85vw'}" [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+                    <div class="ui-g">
+                        <div class="ui-g-4"></div>
+                        <div class="ui-g-4">
+                            <p-fieldset legend="Tipo de Grafica">
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-inputgroup">
+
+                                            <button type="button" [disabled]="DisabledPie" class="ui-button-secondary" pButton icon="pi pi-times" (click)="Pie()" label="Pie"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-inputgroup">
+                                            <button type="button" [disabled]="DisabledLine" class="ui-button-secondary" pButton icon="pi pi-times" (click)="Line()" label="Line"></button>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-inputgroup">
+
+
+                                            <button type="button" [disabled]="DisabledBar" class="ui-button-secondary" pButton icon="pi pi-times" (click)="Bar()" label="Bar"></button>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </p-fieldset>
+
+                        </div>
+                        <div class="ui-g-4"></div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-12 borde li">
+
+                            <div id="ImageGrafica" echarts type="line" [options]="options" [merge]="optionsM"></div>
+                        </div>
+                    </div>
+
+
+                    <p-footer>
+                        <button pButton type="button" (click)="getPDFGrafica()" icon="pi pi-file-pdf" label="Descargar PDF" class="ui-button-success"></button>
+                        <button type="button" class="ui-button-danger" pButton icon="pi pi-times" (click)="displayMaximizable=false" label="CERRAR"></button>
+                    </p-footer>
+                </p-dialog>
+            </div>
+            <div class="ui-g-3 borde">
+                <p-dropdown *ngIf="mostrarInputGrafica" [options]="TituloGrafica2Tipo" [(ngModel)]="Grado" (onChange)="getNombreGrafica()" placeholder="GRAFICA 2" optionLabel="value" [showClear]="false"></p-dropdown>
+                <p-dropdown *ngIf="mostrarBotonGrafica" [options]="TituloGrafica2" [(ngModel)]="opcionSeleccionadoNombreGrafica" (onChange)="Grafica2()" placeholder="TITULO GRAFICA" optionLabel="nombre" [showClear]="false"></p-dropdown>
+
+            </div>
+        </div>
+        <br>
+
+        <p-dropdown [options]="cities" [(ngModel)]="opcionSeleccionado" (onChange)="getArchivo()" placeholder="EXCEL" optionLabel="nombre" [showClear]="false"></p-dropdown>
+
+
+        <br>
+        <br>
+        <div class='borde'>
+            <p-table selectionMode="single" [columns]="cols" [value]="tabla" [scrollable]="true" [style]="{width:'100%'}" scrollHeight="390px">
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup>
+                        <col *ngFor="let cols of columns" style="width:160px">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let cols of columns">
+                            {{cols.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td *ngFor="let cols of columns">
+                            {{rowData[cols.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</block-ui>

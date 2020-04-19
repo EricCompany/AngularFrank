@@ -13,14 +13,14 @@
             <div class="ui-g-3  borde">
                 <form [formGroup]="Data">
                     <div class="ui-inputgroup">
-                        <input type="text" formControlName="data" pInputText placeholder="buscar">
+                        <input type="text" class="buscador" formControlName="data" pInputText placeholder="buscar">
                         <button pButton type="button" (click)="Consult()" label="buscar"></button>
                     </div>
                     <p-toast key="buscador" position="top-right"></p-toast>
                 </form>
             </div>
             <div class="ui-g-2 borde">
-                <p-dropdown [options]="cities" [(ngModel)]="opcionSeleccionadoGrafica" (onChange)="Grafica1()" placeholder="GRAFICA 1" optionLabel="nombre" [showClear]="false"></p-dropdown>
+                <p-dropdown class="graficas" [options]="cities" [(ngModel)]="opcionSeleccionadoGrafica" (onChange)="Grafica1()" placeholder="GRAFICA 1" optionLabel="nombre" [showClear]="false"></p-dropdown>
                 <p-dialog header="Godfather I" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '85vw'}" [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
 
                     <div class="ui-g">
@@ -87,7 +87,7 @@
         <br>
         <br>
         <div class='borde'>
-            <p-table selectionMode="single" [columns]="cols" [value]="tabla" [scrollable]="true" [style]="{width:'100%'}" scrollHeight="390px">
+            <p-table [paginator]="true" [rows]="15" selectionMode="single" [columns]="cols" [value]="tabla" [scrollable]="true" [style]="{width:'100%'}" scrollHeight="390px">
                 <ng-template pTemplate="colgroup" let-columns>
                     <colgroup>
                         <col *ngFor="let cols of columns" style="width:160px">

@@ -1,26 +1,26 @@
 <app-menu-main></app-menu-main>
 <block-ui>
-<div class="ui-g">
+
   <!-- Fila 1 -->
-  <div class="ui-g-12 ui-g-nopad">
 
-    <div class="ui-g-2"></div>
-    <div class="ui-g-8"><p-messages [(value)]="msgs"></p-messages></div>
-    <div class="ui-g-2"> <!-- Margen 2 espacios--></div>
-  </div>
 
-    <div class="ui-g-12 ui-g-nopad">
-    <div class="ui-g-2"> <!-- Margen 2 espacios--></div>
-    <div class="ui-g-3"><p style="color:#5c667d; margin-bottom: 10px; font-size:15px ">Selecciona un excel a graficar:</p> <p-dropdown [options]="cities" placeholder="Selecciona un excel" optionLabel="nombre" [(ngModel)]="OptionSelected" [showClear]="true" (onChange)="graficar()" ></p-dropdown></div>
-    <div class="ui-g-1"></div>
-    <div class="ui-g-4"><p style="color:#5c667d; margin-bottom: 10px; font-size:15px ">Subir un excel nuevo:</p>
+
+     <p-toast  key="BtnSubir-Toast" position="top-right" ></p-toast><!--<p-messages [(value)]="msgs"></p-messages>-->
+
+
+
+  <div class="ui-g-12" >
+    <div class="ui-g-2" ></div>
+
+  <div class="ui-g-8" >
+    <div class="ui-g-12 ui-md-6 ui-lg-6" ><p style=" color:#5c667d; margin-bottom: 10px; font-size:15px ">Selecciona un excel a graficar:</p> <p-dropdown [options]="cities" placeholder="Selecciona un excel" optionLabel="nombre" [(ngModel)]="OptionSelected" [showClear]="true" (onChange)="graficar()" ></p-dropdown></div>
+    <div class="ui-g-12 ui-md-6 ui-lg-6" ><p style="color:#5c667d; margin-bottom: 10px; font-size:15px ">Subir un excel nuevo:</p>
       <!--- accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"-->
       <input type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet " (change)="setFile($event)" style="font-size: 15px; padding-right:4px;"><button [style.visibility]="showButton ? 'visible' : 'hidden'" pButton type="button" label="Subir"  (click)="getExcel(file)" ></button>
-      <!--p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUpload($event)"  ></p-fileUpload-->
-    </div>
-
-
-
+      <!--p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUpload($event)"  ></p-fileUpload--></div>
+  </div>
+    <div class="ui-g-2" ></div>
+  </div>
 
     <div class="ui-g-12 ui-g-nopad" >
       <div class="ui-g-2" ></div>
@@ -31,19 +31,18 @@
         <div class="ui-g-2" ></div>
     </div>
 
-    <div class="ui-g-11 ui-g-nopad">
-      <div class="ui-g-6" ></div>
+    <div class="ui-g-12 ui-g-nopad">
+      <div class="ui-g-5" ></div>
       <div class="ui-g-2"  >
-
         <button pButton icon="pi pi-file-o" (click)="getPDF()"  [disabled]="!estadisticas" type="button" label="Generar PDF"   class="ui-button-raised ui-button-danger" style="  margin-left: 12%; "></button>
-
       </div>
-      <div class="ui-g-2" ></div>
-      <div class="ui-g-2" ></div>
+      <div class="ui-g-5" ></div>
     </div>
+
+
     </div>
-  </div>
-</div>
+
+
 
 
 

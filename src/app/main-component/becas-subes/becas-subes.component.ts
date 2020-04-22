@@ -125,10 +125,10 @@ export class BecasSubesComponent implements OnInit {
         this.blockUI.stop();
       },
       (error) => {
-        this.msgs = [];
-        this.msgs.push({severity: 'error', summary: error.error.msg, detail: ''});
+        //this.msgs = [];
+       // this.msgs.push({severity: 'error', summary: error.error.msg, detail: ''});
         //this.messageService.add({severity:'success', summary: 'Success Message', detail:'Order submitted'});
-
+        this.messageService.add({key: 'BtnSubir-Toast', severity: 'error', summary: 'Error en el excel', detail: error.error.msg, life: 6000 });
         this.blockUI.stop();
       }
     );

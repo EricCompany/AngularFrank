@@ -41,7 +41,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { FormRegistroComponent } from './registro/form-registro/form-registro.component';
 
 import { StepsModule } from 'primeng/steps';
-
+import {Component, ViewEncapsulation} from '@angular/core';
 
 
 
@@ -88,12 +88,13 @@ import { StepsModule } from 'primeng/steps';
     DialogModule,
     FieldsetModule,
     TableModule,
-    
+
 
   ],
   providers: [FormBuilder, ConfirmationService],
   bootstrap: [AppComponent]
 })
+
 
 export class AppModule { }
 

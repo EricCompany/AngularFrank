@@ -3,7 +3,7 @@ import {StepsModule} from 'primeng/steps';
 import {MenuItem} from 'primeng/api';
 import { Router } from '@angular/router';
 import {MainComponentComponent} from '../../main-component/main-component.component';
-
+import {ConfirmationService, Message, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-menu-main',
@@ -15,7 +15,7 @@ export class MenuMainComponent implements OnInit {
   items: MenuItem[];
 
   activeIndex: number = 0;
-  constructor(private router: Router, public app: MainComponentComponent) { }
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private router: Router, public app: MainComponentComponent) { }
 
   ngOnInit() {
    // this.app.activeIndex = this.activeIndex;
@@ -54,13 +54,23 @@ export class MenuMainComponent implements OnInit {
       {
         label: 'Cerrar Sesión',
         command: (event: any) => {
-          this.app.activeIndex = 0;
-          sessionStorage.removeItem('DataUser');
-          this.router.navigate(['/']);
-          //this.messageService.add({severity:'info', summary:'First Step', detail: event.item.label});
+          this.messageService.clear();
+          this.messageService.add({key: 'c', sticky: true, severity: 'warn', summary: '¿Estás seguro de cerrar sesión?', detail: 'confirmar para continuar'});
         }
       }
     ];
   }
+
+  onConfirm() {
+    //this.messageService.clear('c');
+    this.app.activeIndex = 0;
+    sessionStorage.removeItem('DataUser');
+    this.router.navigate(['/']);
+  }
+
+  onReject() {
+    this.messageService.clear('c');
+  }
+
 
 }

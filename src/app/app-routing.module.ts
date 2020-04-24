@@ -7,6 +7,7 @@ import {MenuPrincipalComponent} from './main-component/menu-principal/menu-princ
 import {BecasSubesComponent} from './main-component/becas-subes/becas-subes.component';
 import {FormRegistroComponent} from './registro/form-registro/form-registro.component';
 import { TablaComponent } from './main-component/tabla/tabla.component';
+import { Modulo3Component } from './main-component/modulo3/modulo3.component';
 
 const routes: Routes = [
   {path: 'ITC', component: AppComponent, children: [
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'ModuloBecas', component: MainComponentComponent, children: [
       {path: '', component: MenuPrincipalComponent},
       {path: 'BecasSubes', component: BecasSubesComponent},
-      {path: 'LibrosTitulacion', component: TablaComponent }
+      {path: 'LibrosTitulacion', component: TablaComponent },
+      {path: 'AfiliacionDelSeguroSocialIMMS', component: Modulo3Component }
     ]}
 ];
 

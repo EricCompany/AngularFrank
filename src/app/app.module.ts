@@ -42,6 +42,7 @@ import { FormRegistroComponent } from './registro/form-registro/form-registro.co
 
 import { StepsModule } from 'primeng/steps';
 import {Component, ViewEncapsulation} from '@angular/core';
+import { Modulo3Component } from './main-component/modulo3/modulo3.component';
 
 
 
@@ -55,7 +56,8 @@ import {Component, ViewEncapsulation} from '@angular/core';
     BecasSubesComponent,
     FormRegistroComponent,
     MenuMainComponent,
-    TablaComponent
+    TablaComponent,
+    Modulo3Component
     ],
   imports: [
     BrowserAnimationsModule,

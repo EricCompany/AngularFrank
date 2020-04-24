@@ -48,6 +48,7 @@ export class MenuMainComponent implements OnInit {
         label: 'Afiliacion Seguro Social IMSS',
         command: (event: any) => {
           this.app.activeIndex = 2;
+          this.router.navigate(['/ModuloBecas/AfiliacionDelSeguroSocialIMMS']);
           //this.messageService.add({severity:'info', summary:'Last Step', detail: event.item.label});
         }
       },

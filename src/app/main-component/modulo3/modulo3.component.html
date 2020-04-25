@@ -1,1 +1,28 @@
 <app-menu-main></app-menu-main>
+
+<div class="borde">
+    <div class="ui-g borde">
+        <div class="ui-g-4">
+            <input (change)="mostrar = true" id="sel" [(ngModel)]="seleccionado" class="custom-file-input" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getTable($event)">
+            <button *ngIf="mostrar" pButton type="button" (click)="subirExcel()" label="Subir"></button>
+            <p-toast key="excel" position="top-center"></p-toast>
+        </div>
+    </div>
+    <br>
+    <p-table [columns]="cols" [value]="cars" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

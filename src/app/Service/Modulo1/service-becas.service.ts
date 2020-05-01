@@ -21,17 +21,16 @@ export class ServiceBecasService {
 
   getPDF(File: FormData): Observable<any> {
     return this.http.post(this.endpoint.getEndPoint() + 'PDF/mypdf.php', File, {responseType: 'arraybuffer'});
-   // return this.http.post('http://52.170.42.232/fito/mypdf.php', File, {responseType: 'arraybuffer'});
   }
-
+/*Registra los excel  en la BD*/
   sendExcel(file: FormData): Observable<any> {
     return this.http.post(this.endpoint.getEndPoint() + 'BecasSubes/mod1_registrarExcel.php', file );
   }
-
+/*Obtiene el select de los excel registrados*/
   getFiles(): Observable<Modulo1Excel[]> {
     return this.http.get<Modulo1Excel[]>(this.endpoint.getEndPoint() + 'BecasSubes/mod1_enviarSelect.php', );
   }
-
+/*Genera la grafica de acuerdo al excel seleccionado*/
   graficarSelect(opc: number): Observable<any> {
     return this.http.post(this.endpoint.getEndPoint() + 'BecasSubes/mod1_graficarSelect.php', opc, HEADER );
   }

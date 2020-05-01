@@ -1,18 +1,11 @@
 <app-menu-main></app-menu-main>
 <block-ui>
-
   <!-- Fila 1 -->
-
-
-
+     <!--Mensaje-->
      <p-toast  key="BtnSubir-Toast" position="top-right" ></p-toast><!--<p-messages [(value)]="msgs"></p-messages>-->
-
-
-
   <div class="ui-g-12" >
-    <div class="ui-g-2" ></div>
-
-  <div class="ui-g-8" >
+    <div class="ui-g-2" ></div><!-- Espacios -->
+  <div class="ui-g-8">
     <div class="ui-g-12 ui-md-6 ui-lg-6" ><p style=" color:#5c667d; margin-bottom: 10px; font-size:15px ">Selecciona un excel a graficar:</p> <p-dropdown [options]="cities" placeholder="Selecciona un excel" optionLabel="nombre" [(ngModel)]="OptionSelected" [showClear]="true" (onChange)="graficar()" ></p-dropdown></div>
     <div class="ui-g-12 ui-md-6 ui-lg-6" ><p style="color:#5c667d; margin-bottom: 10px; font-size:15px ">Subir un excel nuevo:</p>
       <!--- accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"-->
@@ -21,31 +14,22 @@
   </div>
     <div class="ui-g-2" ></div>
   </div>
-
     <div class="ui-g-12 ui-g-nopad" >
       <div class="ui-g-2" ></div>
       <div class="ui-g-8"><!--img src="assets/img/chart.png" style=" width:78%; margin-left: 9%; " ></div-->
-       <p-card>
+       <p-card><!--Aaqui se mostrara la grafica -->
         <div id="image" echarts [options]="options" [merge]="optionsM" ></div>
        </p-card>
         <div class="ui-g-2" ></div>
     </div>
-
     <div class="ui-g-12 ui-g-nopad">
       <div class="ui-g-5" ></div>
-      <div class="ui-g-2"  >
+      <div class="ui-g-2" ><!-- Boton para agenrerar el pdf-->
         <button pButton icon="pi pi-file-o" (click)="getPDF()"  [disabled]="!estadisticas" type="button" label="Generar PDF"   class="ui-button-raised ui-button-danger" style="  margin-left: 12%; "></button>
       </div>
       <div class="ui-g-5" ></div>
     </div>
-
-
     </div>
-
-
-
-
-
 
   </block-ui>
 

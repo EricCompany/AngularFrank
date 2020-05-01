@@ -37,7 +37,6 @@ export class BecasSubesComponent implements OnInit {
   options: any;
   file: any[];
   imgBase64: string;
-
   estadisticas: Estadisticas[];
   respBlob: any;
   resp: ResponseDTO;
@@ -47,23 +46,22 @@ export class BecasSubesComponent implements OnInit {
   imgF = new Image();
   optionsM: any;
   showButton = false;
-
-
   cities: Modulo1Excel[];
   selectedCity: any;
   OptionSelected: any;
   msgs: Message[] = [];
+
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) {
     this.app.activeIndex = 0;
     let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
-    if (dataUser === null){
+    if (dataUser === null) {
       this.router.navigate(['/']);
     }
 
   }
 
   ngOnInit() {
-    this.getCatFile();//select
+    this.getCatFile(); //select
     this.data = [];
     this.dataTitle = [];
     this.dataTitle.push('INGENIERIA EN SISTEMAS COMPUTACIONALES');
@@ -83,7 +81,7 @@ export class BecasSubesComponent implements OnInit {
     this.data.push({value: 0, name: 'INGENIERIA ELECTRONICA \n Hombres: 0 \n Mujeres: 0'});
     this.DrawGrafica(this.dataTitle, this.data);
   }
-
+/*Boton subir de becas subes visisble y no visible*/
   setFile($event) {
     this.showButton = true;
     if ($event.target.files[0]) {
@@ -134,7 +132,7 @@ export class BecasSubesComponent implements OnInit {
     );
   }}
 
-  getPDF(){
+  getPDF() {
     this.blockUI.start('Generando PDF...'); // Start blocking
     // Variables
     let formData = new FormData();
@@ -179,8 +177,6 @@ export class BecasSubesComponent implements OnInit {
         a.download = nombreFile;
         document.body.appendChild(a);
         a.click();
-
-
         console.log('Se realizó el post correctamente');
         this.blockUI.stop();
       },
@@ -190,9 +186,6 @@ export class BecasSubesComponent implements OnInit {
 
   DrawGrafica(dataTitle: any, Data: any) {
     this.options = {
-
-
-
       plugins: {
         datalabels: {
           color: 'white',
@@ -249,10 +242,8 @@ export class BecasSubesComponent implements OnInit {
     };
     this.optionsM = this.options;
   }
-
+/*Select de los excel*/
   getCatFile() {
-
-
     this.http.getFiles().subscribe(
       (v) => {
         this.cities = v;
@@ -262,11 +253,7 @@ export class BecasSubesComponent implements OnInit {
       }
     );
   }
-
-  getEstadisticas(){
-
-  }
-
+ /*Genera la grafica del excel */
   graficar() {
     //console.log(JSON.stringify(this.OptionSelected));
     this.http.graficarSelect(this.OptionSelected).subscribe(

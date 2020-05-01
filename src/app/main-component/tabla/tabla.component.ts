@@ -139,7 +139,9 @@ export class TablaComponent implements OnInit {
       this.mostrar = false;
     }
   }
-
+  getDateTable2(event) {
+ 
+  }
   uploadFileToActivity() {
     this.blockUI.start('Procesando Archivo...'); // Start blocking
     let formdata = new FormData();
@@ -199,6 +201,7 @@ export class TablaComponent implements OnInit {
     this.httpselect.getDataFile(this.opcionSeleccionado).subscribe(
       (data) => {
         this.tabla = data;
+        console.log(this.tabla);
         this.mostrarInputGrafica = true;
         this.blockUI.stop();
       },

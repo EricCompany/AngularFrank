@@ -4,9 +4,10 @@
 
     <div class="borde">
         <div class="ui-g bordes">
+
             <div class="ui-g-4">
-                <input (change)="mostrar = true" id="sel" [(ngModel)]="seleccionado" class="custom-file-input" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getTable($event)">
-                <button *ngIf="mostrar" pButton type="button" (click)="subirExcel()" label="Subir"></button>
+                <input id="sel" [(ngModel)]="seleccionado" class="custom-file-input" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getTable($event)">
+                <button [style.visibility]="mostrar ? 'visible' : 'hidden'" pButton type="button" (click)="subirExcel()" label="Subir"></button>
                 <p-toast key="excel" position="top-center"></p-toast>
             </div>
 

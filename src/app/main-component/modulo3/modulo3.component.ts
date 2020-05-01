@@ -33,8 +33,8 @@ export class Modulo3Component implements OnInit {
   fileToUploadName2: string = null;
   seleccionado: any;
   seleccionado2: any;
-  mostrar: false;
-  mostrar2: false;
+  mostrar: boolean = false;
+  mostrar2: boolean = false;
   showButton: boolean = false;
   verificacion: Verify;
   cities: SelectDTO[];
@@ -61,6 +61,7 @@ export class Modulo3Component implements OnInit {
     ];
   }
   getTable(event) {
+    this.mostrar = true;
     if (event.target.files[0]) {
       this.fileToUpload = event.target.files[0];
       this.fileToUploadName = event.target.files[0].name;
@@ -79,7 +80,7 @@ export class Modulo3Component implements OnInit {
         if (data === 'El archivo ' + this.fileToUploadName + ' se cargo con EXITO.') {
           this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'" });
         } else {
-          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'" });
+          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Esta  tus EXCEL', detail: "'" + this.verificacion + "'" });
         }
         this.getArchivos();
         this.blockUI.stop();
@@ -148,15 +149,12 @@ export class Modulo3Component implements OnInit {
     if (event.target.files[0]) {
       this.fileToUpload2 = event.target.files[0];
       this.fileToUploadName2 = event.target.files[0].name;
-    } else {
-      this.mostrar = false;
+    this.mostrar2 = true;
+    } else {  
+      this.mostrar2 = false;
     }
   }
   subirExcel2() {
-
-    console.log(this.fileToUpload2);
-    console.log(this.fileToUploadName2);
-
     this.blockUI.start('Procesando Archivo...');
     let formdata = new FormData();
     formdata.append('excel', this.fileToUpload2, this.fileToUploadName2);

@@ -12,6 +12,8 @@ import { Grafica2Modulo2DTO } from '../../DTO/Grafica2Modulo2DTO';
 import { Verify } from '../../DTO/VerificacionExcelDTO';
 import htmlToImage from 'html-to-image';
 import { logging } from 'protractor';
+import { Router } from '@angular/router';
+import {MainComponentComponent} from '../main-component.component';
 @Component({
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
@@ -72,8 +74,12 @@ export class TablaComponent implements OnInit {
   DisabledBar: boolean = false;
   GraficaID: any;
 
-  constructor(private MessageService: MessageService, private http: Modulo3Service, private form: FormBuilder, private httpselect: SelectService) {
-
+  constructor( public app: MainComponentComponent, private router: Router, private MessageService: MessageService, private http: Modulo3Service, private form: FormBuilder, private httpselect: SelectService) {
+    this.app.activeIndex = 1;
+    let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
+    if (dataUser === null) {
+      this.router.navigate(['/']);
+    }
     this.Data = this.form.group({
       data: ['', Validators.required]
     });
@@ -81,6 +87,7 @@ export class TablaComponent implements OnInit {
     this.DataGrafica = this.form.group({
       data: ['', Validators.required]
     });
+
   }
 
   ngOnInit() {
@@ -150,9 +157,9 @@ export class TablaComponent implements OnInit {
       (data) => {
         this.verificacion = data;
         if (data === 'El archivo ' + this.fileToUploadName + ' se cargo con EXITO.') {
-          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'" });
+          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'",life:10000 });
         } else {
-          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'" });
+          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life:20000 });
         }
         this.getArchivos();
         this.blockUI.stop();

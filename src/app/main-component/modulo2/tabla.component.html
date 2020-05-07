@@ -4,13 +4,13 @@
     <div class="fluid-container ">
 
         <div class="ui-g ">
-            <div class="ui-g-4 borde">
-
-                <input (change)="mostrar = true" id="sel" [(ngModel)]="seleccionado" class="custom-file-input" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getDateTable($event)">
+            <div class="ui-g-12 ui-md-6 ui-lg-4 bordes">
+                <input (change)="mostrar = true" id="sel" [(ngModel)]="seleccionado" class="" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="font-size: 15px; padding-right:4px;"
+                    (change)="getDateTable($event)">
                 <button *ngIf="mostrar" pButton type="button" (click)="uploadFileToActivity()" label="Subir"></button>
                 <p-toast key="excel" position="top-center"></p-toast>
             </div>
-            <div class="ui-g-3  borde">
+            <div class="ui-g-12 ui-md-6 ui-lg-3  bordes">
                 <form [formGroup]="Data">
                     <div class="ui-inputgroup">
                         <input type="text" class="buscador" formControlName="data" pInputText placeholder="buscar">
@@ -19,13 +19,13 @@
                     <p-toast key="buscador" position="top-right"></p-toast>
                 </form>
             </div>
-            <div class="ui-g-2 borde">
+            <div class="ui-g-12 ui-md-6 ui-lg-2 bordes">
                 <p-dropdown class="graficas" [options]="cities" [(ngModel)]="opcionSeleccionadoGrafica" (onChange)="Grafica1()" placeholder="GRAFICA 1" optionLabel="nombre" [showClear]="false"></p-dropdown>
-                <p-dialog header="Godfather I" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '85vw'}" [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+                <p-dialog header="GRAFICAS" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '85vw'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="true">
 
                     <div class="ui-g">
-                        <div class="ui-g-4"></div>
-                        <div class="ui-g-4">
+                        <div class="ui-g-1 ui-md-2 ui-lg-4"></div>
+                        <div class="ui-g-10 ui-md-8 ui-lg-4">
                             <p-fieldset legend="Tipo de Grafica">
                                 <div class="ui-g ui-fluid">
                                     <div class="ui-g-12 ui-md-4">
@@ -57,15 +57,14 @@
                             </p-fieldset>
 
                         </div>
-                        <div class="ui-g-4"></div>
+                        <div class="ui-g-1 ui-md-2 ui-lg-4"></div>
                     </div>
                     <div class="ui-g">
-                        <div class="ui-g-12 borde li">
+                        <div class="ui-g-12  bordess li">
 
                             <div id="ImageGrafica" echarts type="line" [options]="options" [merge]="optionsM"></div>
                         </div>
                     </div>
-
 
                     <p-footer>
                         <button pButton type="button" (click)="getPDFGrafica()" icon="pi pi-file-pdf" label="Descargar PDF" class="ui-button-success"></button>
@@ -73,7 +72,7 @@
                     </p-footer>
                 </p-dialog>
             </div>
-            <div class="ui-g-3 borde">
+            <div class="ui-g-12 ui-md-6 ui-lg-2 bordes">
                 <p-dropdown *ngIf="mostrarInputGrafica" [options]="TituloGrafica2Tipo" [(ngModel)]="Grado" (onChange)="getNombreGrafica()" placeholder="GRAFICA 2" optionLabel="value" [showClear]="false"></p-dropdown>
                 <p-dropdown *ngIf="mostrarBotonGrafica" [options]="TituloGrafica2" [(ngModel)]="opcionSeleccionadoNombreGrafica" (onChange)="Grafica2()" placeholder="TITULO GRAFICA" optionLabel="nombre" [showClear]="false"></p-dropdown>
 

@@ -7,11 +7,13 @@ import { SelectDTO } from '../../DTO/SelectDTO';
 import { AfiliacionIMSSDTO } from '../../DTO/AfiliacionIMSSDTO';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
+import { MainComponentComponent } from '../main-component.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-modulo3',
   templateUrl: './modulo3.component.html',
-  providers: [MessageService],
   styleUrls: ['./modulo3.component.css'],
+  providers: [MessageService],
   styles: [`
   :host ::ng-deep .ui-button {
       margin: .5em .5em .5em 0;
@@ -42,13 +44,22 @@ export class Modulo3Component implements OnInit {
   opcionSeleccionado2: any;
   tabla: AfiliacionIMSSDTO[];
   Data;
+  displayBasic: boolean;
 
-
-  constructor(private form: FormBuilder, private MessageService: MessageService, private http: Modulo3Service) {
-
+  showModalDialog() {
+    this.displayBasic = true;
+  }
+  constructor(private router: Router, private form: FormBuilder, private MessageService: MessageService,
+    public app: MainComponentComponent,
+    private http: Modulo3Service) {
+    this.app.activeIndex = 2;
     this.Data = this.form.group({
       data: ['', Validators.required]
     });
+    let dataUser = JSON.parse(sessionStorage.getItem('DataUser'));
+    if (dataUser === null) {
+      this.router.navigate(['/']);
+    }
   }
   ngOnInit() {
     this.getArchivos();
@@ -70,6 +81,8 @@ export class Modulo3Component implements OnInit {
     }
   }
 
+
+
   subirExcel() {
     this.blockUI.start('Procesando Archivo...');
     let formdata = new FormData();
@@ -77,18 +90,14 @@ export class Modulo3Component implements OnInit {
     this.http.SubirExcel(formdata).subscribe(
       (data) => {
         this.verificacion = data;
-        if (data === 'El archivo ' + this.fileToUploadName + ' se cargo con EXITO.') {
-          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'" });
-        } else {
-          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Esta  tus EXCEL', detail: "'" + this.verificacion + "'" });
-        }
+        this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life: 10000 });
         this.getArchivos();
         this.blockUI.stop();
         this.mostrar = false;
         this.seleccionado = '';
       },
       (error) => {
-        this.MessageService.add({ key: 'excel', severity: 'info', summary: 'Estatus EXCEL', detail: 'Es posible que el nombre con el que intenta registrar el archivo este en uso, FAVOR DE VERIFICAR!' });
+        this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + error['error']+ "'", life: 20000 });
         console.log(error);
         this.blockUI.stop();
         this.mostrar = false;
@@ -117,6 +126,7 @@ export class Modulo3Component implements OnInit {
       (error) => {
         this.blockUI.stop();
         console.log(error);
+
       }
     );
   }
@@ -149,8 +159,8 @@ export class Modulo3Component implements OnInit {
     if (event.target.files[0]) {
       this.fileToUpload2 = event.target.files[0];
       this.fileToUploadName2 = event.target.files[0].name;
-    this.mostrar2 = true;
-    } else {  
+      this.mostrar2 = true;
+    } else {
       this.mostrar2 = false;
     }
   }
@@ -162,20 +172,20 @@ export class Modulo3Component implements OnInit {
     this.http.SubirExcel2(formdata).subscribe(
       (data) => {
         this.verificacion = data;
-        if (data === 'El archivo ' + this.fileToUploadName2 + ' se cargo con EXITO.') {
-          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'" });
-        } else {
-          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'" });
-        }
+        let archivo = this.opcionSeleccionado2;
+        this.getTabla2(archivo);
+        this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life: 10000 });
+
         this.getArchivos();
         this.blockUI.stop();
         this.mostrar2 = false;
         this.showButton = false;
+        this.opcionSeleccionado = this.opcionSeleccionado2;
         this.opcionSeleccionado2 = {};
         this.seleccionado2 = '';
       },
       (error) => {
-        this.MessageService.add({ key: 'excel', severity: 'info', summary: 'Estatus EXCEL', detail: 'Es posible que el nombre con el que intenta registrar el archivo este en uso, FAVOR DE VERIFICAR!' });
+        this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + error['error'] + "'", life: 20000 });
         console.log(error);
         this.blockUI.stop();
         this.mostrar2 = false;
@@ -186,5 +196,21 @@ export class Modulo3Component implements OnInit {
     );
 
 
+  }
+
+  getTabla2(archivo) {
+    this.displayBasic = false;
+    this.blockUI.start('Actualizando Tabla...');
+
+    this.http.getDataFile(archivo).subscribe(
+      (data) => {
+        this.tabla = data;
+        this.blockUI.stop();
+      },
+      (error) => {
+        this.blockUI.stop();
+        console.log(error);
+      }
+    );
   }
 }

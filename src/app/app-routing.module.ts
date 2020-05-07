@@ -6,7 +6,7 @@ import {MainComponentComponent} from './main-component/main-component.component'
 import {MenuPrincipalComponent} from './main-component/menu-principal/menu-principal.component';
 import {BecasSubesComponent} from './main-component/becas-subes/becas-subes.component';
 import {FormRegistroComponent} from './registro/form-registro/form-registro.component';
-import { TablaComponent } from './main-component/tabla/tabla.component';
+import { TablaComponent } from './main-component/modulo2/tabla.component';
 import { Modulo3Component } from './main-component/modulo3/modulo3.component';
 
 const routes: Routes = [

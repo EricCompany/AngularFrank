@@ -6,6 +6,10 @@
     outline: none;
 }
 
+.bordes {
+    border: 1px solid rgb(231, 231, 231);
+}
+
 .buscador {
     height: 35px;
     width: 210px;
@@ -28,24 +32,25 @@
 .custom-file-input::-webkit-file-upload-button {
     visibility: hidden;
     margin-top: 15px;
+    width: 98px;
     margin-bottom: 15px;
-    margin-left: 5px;
+    margin-left: -5px;
 }
 
 .custom-file-input::before {
-    content: 'Seleccionar Excel';
+    content: 'Seleccionar Archivo';
     display: inline-block;
     background: linear-gradient(top, #f9f9f9, #e3e3e3);
     border: 1px solid #999;
     border-radius: 3px;
-    padding: 5px 8px;
+    padding: 5px 3px;
     outline: none;
     white-space: nowrap;
     -webkit-user-select: none;
     cursor: pointer;
     text-shadow: 1px 1px #fff;
-    font-weight: 700;
-    font-size: 9pt;
+    font-weight: 300;
+    font-size: 8pt;
 }
 
 .custom-file-input:hover::before {

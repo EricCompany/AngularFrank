@@ -28,7 +28,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TablaComponent } from './main-component/tabla/tabla.component';
+import { TablaComponent } from './main-component/modulo2/tabla.component';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import {FieldsetModule} from 'primeng/fieldset';

@@ -1,27 +1,48 @@
+<app-menu-main></app-menu-main>
 <block-ui>
 
-    <app-menu-main></app-menu-main>
 
     <div class="borde">
         <div class="ui-g bordes">
 
-            <div class="ui-g-4">
-                <input id="sel" [(ngModel)]="seleccionado" class="custom-file-input" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getTable($event)">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <input id="sel" [(ngModel)]="seleccionado" style="font-size: 15px; padding-right:4px;" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getTable($event)">
                 <button [style.visibility]="mostrar ? 'visible' : 'hidden'" pButton type="button" (click)="subirExcel()" label="Subir"></button>
                 <p-toast key="excel" position="top-center"></p-toast>
             </div>
 
-            <div class="ui-g-4 bordes">
-                <p-dropdown [options]="cities" [(ngModel)]="opcionSeleccionado2" (onChange)="fileSelect()" placeholder="EXCEL" optionLabel="nombre" [showClear]="false"></p-dropdown>
-                <input [style.visibility]="showButton ? 'visible' : 'hidden'" (change)="mostrar2 = true" id="sel2" [(ngModel)]="seleccionado2" class="custom-file-input" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    (change)="getFile($event)">
-                <button *ngIf="mostrar2" pButton type="button" (click)="subirExcel2()" label="Subir"></button>
+            <div class="ui-g-12 ui-md-6 ui-lg-2 bordes">
+                <button type="button" (click)="showModalDialog()" pButton icon="pi pi-external-link" label="Editar"></button>
 
+                <p-dialog header="Editar" [(visible)]="displayBasic" [modal]="true" [style]="{width: '55vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="true">
+
+                    <div class="ui-g bordes">
+
+                        <div class="ui-g-12">
+                            <p-fieldset legend="Editar Archivo">
+                                Seleccione un archivo para editar.
+                            </p-fieldset>
+
+                        </div>
+                        <div class="ui-g-12">
+                            <p-dropdown [options]="cities" [(ngModel)]="opcionSeleccionado2" (onChange)="fileSelect()" placeholder="EXCEL" optionLabel="nombre" [showClear]="false"></p-dropdown>
+                            <input [style.visibility]="showButton ? 'visible' : 'hidden'" (change)="mostrar2 = true" id="sel2" [(ngModel)]="seleccionado2" style="font-size: 15px; padding-right:4px;" type="file" accept="application/vnd.ms-excel,application/vnd.ms-excel,  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                (change)="getFile($event)">
+                            <button *ngIf="mostrar2" pButton type="button" (click)="subirExcel2()" label="Subir"></button>
+                        </div>
+                        <div class="ui-g-12">
+                        </div>
+                    </div>
+
+                    <p-footer>
+                        <button type="button" pButton icon="pi pi-times" (click)="displayBasic=false" label="Cancelar" class="ui-button-secondary"></button>
+                    </p-footer>
+                </p-dialog>
             </div>
-            <div class="ui-g-2 bordes">
+            <div class="ui-g-12 ui-md-6 ui-lg-3 bordes">
                 <p-dropdown [options]="cities" [(ngModel)]="opcionSeleccionado" (onChange)="getTabla()" placeholder="EXCEL" optionLabel="nombre" [showClear]="false"></p-dropdown>
             </div>
-            <div class="ui-g-2 bordes">
+            <div class="ui-g-12 ui-md-6 ui-lg-3 bordes">
                 <form [formGroup]="Data">
                     <div class="ui-inputgroup">
                         <input type="text" class="buscador" formControlName="data" pInputText placeholder="buscar">

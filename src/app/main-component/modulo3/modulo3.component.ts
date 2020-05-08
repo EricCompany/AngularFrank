@@ -97,7 +97,7 @@ export class Modulo3Component implements OnInit {
         this.seleccionado = '';
       },
       (error) => {
-        this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + error['error']+ "'", life: 20000 });
+        this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + error['error'] + "'", life: 20000 });
         console.log(error);
         this.blockUI.stop();
         this.mostrar = false;

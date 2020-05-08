@@ -208,7 +208,6 @@ export class TablaComponent implements OnInit {
     this.httpselect.getDataFile(this.opcionSeleccionado).subscribe(
       (data) => {
         this.tabla = data;
-        console.log(this.tabla);
         this.mostrarInputGrafica = true;
         this.blockUI.stop();
       },
@@ -687,9 +686,6 @@ export class TablaComponent implements OnInit {
         a.download = nombreFile;
         document.body.appendChild(a);
         a.click();
-
-
-        console.log('Se realizó el post correctamente');
         this.blockUI.stop();
       },
       (error) => { console.log(error); this.blockUI.stop(); }

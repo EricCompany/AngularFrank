@@ -53,7 +53,7 @@ export class BecasSubesComponent implements OnInit {
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, public app: MainComponentComponent, private router: Router, private http: ServiceBecasService) {
     this.app.activeIndex = 0;
-    let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
+    const dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
     if (dataUser === null) {
       this.router.navigate(['/']);
     }
@@ -61,7 +61,7 @@ export class BecasSubesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCatFile(); //select
+    this.getCatFile(); // select
     this.data = [];
     this.dataTitle = [];
     this.dataTitle.push('INGENIERIA EN SISTEMAS COMPUTACIONALES');
@@ -93,16 +93,16 @@ export class BecasSubesComponent implements OnInit {
 
   }
 
-  getExcel(event) {//recibe la variable file
+  getExcel(event) {// recibe la variable file
     this.blockUI.start('Procesando Excel...'); // Start blocking
     if ( event.target.files[0] === null ||  event.target.files[0] === undefined) {
       this.blockUI.stop();
     } else {
-    let formdata = new FormData();
+    const formdata = new FormData();
     formdata.append('excel', event.target.files[0], event.target.files[0].name);
     this.http.sendExcel(formdata).subscribe(
-      (resp) => {//si es estutus 200 ejecuta
-        this.getCatFile();//select
+      (resp) => {// si es estutus 200 ejecuta
+        this.getCatFile(); // select
         this.resp = resp;
         if (this.resp.status) {
           this.estadisticas = [];
@@ -112,7 +112,7 @@ export class BecasSubesComponent implements OnInit {
           this.dataTitle = [];
           this.estadisticas.forEach( v => {
             this.dataTitle.push(v.nameCarrera );
-            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombres: '+ v.hombres + '\n Mujeres:' + v.mujeres});
+            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombres: ' + v.hombres + '\n Mujeres:' + v.mujeres});
           });
           this.DrawGrafica(this.dataTitle, this.data);
         } else {
@@ -123,9 +123,9 @@ export class BecasSubesComponent implements OnInit {
         this.blockUI.stop();
       },
       (error) => {
-        //this.msgs = [];
+        // this.msgs = [];
        // this.msgs.push({severity: 'error', summary: error.error.msg, detail: ''});
-        //this.messageService.add({severity:'success', summary: 'Success Message', detail:'Order submitted'});
+        // this.messageService.add({severity:'success', summary: 'Success Message', detail:'Order submitted'});
         this.messageService.add({key: 'BtnSubir-Toast', severity: 'error', summary: 'Error en el excel', detail: error.error.msg, life: 6000 });
         this.blockUI.stop();
       }
@@ -135,12 +135,14 @@ export class BecasSubesComponent implements OnInit {
   getPDF() {
     this.blockUI.start('Generando PDF...'); // Start blocking
     // Variables
-    let formData = new FormData();
-    let node = document.getElementById('image');
-    let img = new Image();
+    const formData = new FormData();
+    const node = document.getElementById('image');
+    document.getElementById('excelName');
+    const img = new Image();
 
+   // console.log(this.OptionSelected);
     // Get Foto de Grafica
-   htmlToImage.toPng(node).then(
+    htmlToImage.toPng(node).then(
      (imgbase64) => {
 
         this.imgF.src = imgbase64;
@@ -150,13 +152,15 @@ export class BecasSubesComponent implements OnInit {
 
        // Save in FormData
        // formData.append('imagen', event.target.files[0], 'grafica.png');
-       formData.append('imagen', this.imgF.src);
+        formData.append('imagen', this.imgF.src);
+        formData.append('excelName', this.OptionSelected.id);
+
 
        // Call Service
-         this.GeneratePDF(formData);
+        this.GeneratePDF(formData);
 
       }
-      ).catch(function (error) {
+      ).catch(function(error) {
       console.error('oops, something went wrong!', error);
     });
 
@@ -169,11 +173,11 @@ export class BecasSubesComponent implements OnInit {
       (resp) => {
         this.respBlob = resp;
 
-        let blob = new Blob([this.respBlob], { type: 'application/pdf'});
-        let a = document.createElement('a');
+        const blob = new Blob([this.respBlob], { type: 'application/pdf'});
+        const a = document.createElement('a');
         a.href = window.URL.createObjectURL(blob);
-        let ahora: Date = new Date();
-        let nombreFile = 'Estadisticas Becas SUbes_'+ahora.getFullYear()+ahora.getMonth()+ahora.getDate()+ahora.getHours()+ahora.getMinutes()+ahora.getSeconds()+'.pdf';
+        const ahora: Date = new Date();
+        const nombreFile = 'Estadisticas Becas SUbes_' + ahora.getFullYear() + ahora.getMonth() + ahora.getDate() + ahora.getHours() + ahora.getMinutes() + ahora.getSeconds() + '.pdf';
         a.download = nombreFile;
         document.body.appendChild(a);
         a.click();
@@ -189,20 +193,20 @@ export class BecasSubesComponent implements OnInit {
       plugins: {
         datalabels: {
           color: 'white',
-          backgroundColor: function(context) {
+          backgroundColor(context) {
             return context.dataset.backgroundColor;
           },
           borderRadius: 5,
-          display: function(context) {
+          display(context) {
             return context.dataset.data[context.dataIndex] > 0;
           },
           font: {
             weight: 'bold',
             size: 14,
-            color: "black"
+            color: 'black'
           },
-          formatter: function(value, context,ap ='<?php echo json_encode($CalMat) ?>',rp ='<?php echo json_encode($CalMatR) ?>') {
-            //para aprobados
+          formatter(value, context, ap = '<?php echo json_encode($CalMat) ?>', rp = '<?php echo json_encode($CalMatR) ?>') {
+            // para aprobados
 
             return   '8%';
           }
@@ -255,11 +259,11 @@ export class BecasSubesComponent implements OnInit {
   }
  /*Genera la grafica del excel */
   graficar() {
-    //console.log(JSON.stringify(this.OptionSelected));
+    // console.log(JSON.stringify(this.OptionSelected));
     this.http.graficarSelect(this.OptionSelected).subscribe(
       (resp) => {
         this.resp = resp;
-        if(this.resp.status) {
+        if (this.resp.status) {
           this.estadisticas = [];
           this.estadisticas = this.resp.data as Estadisticas[];
           console.log(JSON.stringify(this.estadisticas));
@@ -267,10 +271,10 @@ export class BecasSubesComponent implements OnInit {
           this.dataTitle = [];
           this.estadisticas.forEach( v => {
             this.dataTitle.push(v.nameCarrera );
-            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombres: '+ v.hombres + '\n Mujeres:' + v.mujeres});
+            this.data.push({value: v.totalAlumnos, name: v.nameCarrera + ' \n Hombres: ' + v.hombres + '\n Mujeres:' + v.mujeres});
           });
           this.DrawGrafica(this.dataTitle, this.data);
-        }else {
+        } else {
           console.log(this.resp.msg);
         }
         this.blockUI.stop();

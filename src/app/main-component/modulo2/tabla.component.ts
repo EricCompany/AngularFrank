@@ -13,7 +13,7 @@ import { Verify } from '../../DTO/VerificacionExcelDTO';
 import htmlToImage from 'html-to-image';
 import { logging } from 'protractor';
 import { Router } from '@angular/router';
-import {MainComponentComponent} from '../main-component.component';
+import { MainComponentComponent } from '../main-component.component';
 @Component({
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
@@ -78,9 +78,9 @@ export class TablaComponent implements OnInit {
   DisabledBar: boolean = false;
   GraficaID: any;
 
-  constructor( public app: MainComponentComponent, private router: Router, private MessageService: MessageService, private http: Modulo3Service, private form: FormBuilder, private httpselect: SelectService) {
+  constructor(public app: MainComponentComponent, private router: Router, private MessageService: MessageService, private http: Modulo3Service, private form: FormBuilder, private httpselect: SelectService) {
     this.app.activeIndex = 1;
-    let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
+    let dataUser = JSON.parse(sessionStorage.getItem('DataUser'));
     if (dataUser === null) {
       this.router.navigate(['/']);
     }
@@ -112,6 +112,7 @@ export class TablaComponent implements OnInit {
       { field: 'semestre', header: 'SEMESTRE Y AÑO' },
       { field: 'hombre', header: 'HOMBRE' },
       { field: 'mujer', header: 'MUJER' },
+      { field: 'otro', header: 'OTRO' },
       { field: 'opcion_titulacion', header: 'OPCION DE TITULACIÓN' },
       { field: 'noLibro', header: 'No. DE LIBRO' },
       { field: 'foja', header: 'FOJA' },
@@ -132,12 +133,12 @@ export class TablaComponent implements OnInit {
 
 
 
-    this.data.push({ value: 0, name: 'INGENIERIA EN SISTEMAS COMPUTACIONALES \n Hombres: 0 \n Mujeres: 0' });
-    this.data.push({ value: 0, name: 'IINGENIERIA INDUSTRIAL \n Hombres: 0 \n Mujeres: 0' });
-    this.data.push({ value: 0, name: 'INGENIERIA EN GESTION EMPRESARIAL \n Hombres: 0 \n Mujeres: 0' });
-    this.data.push({ value: 0, name: 'INGENIERIA MECATRONICA \n Hombres: 0 \n Mujeres: 0' });
-    this.data.push({ value: 0, name: 'ICONTADOR PUBLICO \n Hombres: 0 \n Mujeres: 0' });
-    this.data.push({ value: 0, name: 'INGENIERIA ELECTRONICA \n Hombres: 0 \n Mujeres: 0' });
+    this.data.push({ value: 0, name: 'INGENIERIA EN SISTEMAS COMPUTACIONALES \n Hombres: 0 \n Mujeres: 0 \n Otro: 0' });
+    this.data.push({ value: 0, name: 'IINGENIERIA INDUSTRIAL \n Hombres: 0 \n Mujeres: 0 \n Otro: 0' });
+    this.data.push({ value: 0, name: 'INGENIERIA EN GESTION EMPRESARIAL \n Hombres: 0 \n Mujeres: 0 \n Otro: 0' });
+    this.data.push({ value: 0, name: 'INGENIERIA MECATRONICA \n Hombres: 0 \n Mujeres: 0 \n Otro: 0' });
+    this.data.push({ value: 0, name: 'ICONTADOR PUBLICO \n Hombres: 0 \n Mujeres: 0 \n Otro: 0' });
+    this.data.push({ value: 0, name: 'INGENIERIA ELECTRONICA \n Hombres: 0 \n Mujeres: 0 \n Otro: 0' });
     this.DrawGrafica(this.dataTitle, this.data, this.Titulo, this.GraficaID);
   }
 
@@ -151,7 +152,7 @@ export class TablaComponent implements OnInit {
     }
   }
   getDateTable2(event) {
- 
+
   }
   uploadFileToActivity() {
     this.blockUI.start('Procesando Archivo...'); // Start blocking
@@ -161,9 +162,9 @@ export class TablaComponent implements OnInit {
       (data) => {
         this.verificacion = data;
         if (data === 'El archivo ' + this.fileToUploadName + ' se cargo con EXITO.') {
-          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'",life:10000 });
+          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life: 10000 });
         } else {
-          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life:20000 });
+          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life: 20000 });
         }
         this.getArchivos();
         this.blockUI.stop();
@@ -256,7 +257,7 @@ export class TablaComponent implements OnInit {
         this.Titulo = TituloGrafica;
         this.grafica.forEach(v => {
           this.dataTitle.push(v.CARRERA);
-          this.data.push({ value: v.TOTAL, name: v.CARRERA + ' \n HOMBRES: ' + v.HOMBRES + '\n MUJERES:' + v.MUJERES + '\n TOTAL:' + v.TOTAL });
+          this.data.push({ value: v.TOTAL, name: v.CARRERA + ' \n HOMBRES: ' + v.HOMBRES + '\n MUJERES:' + v.MUJERES + '\n OTRO:' + v.OTRO + '\n TOTAL:' + v.TOTAL });
           this.opcionSeleccionadoGrafica = {};
         });
         this.DrawGrafica(this.dataTitle, this.data, this.Titulo, this.GraficaID);
@@ -272,9 +273,9 @@ export class TablaComponent implements OnInit {
 
   Grafica2() {
     this.opcionNombre2 = this.opcionSeleccionado;
-    console.log( this.opcionNombre2);
+    console.log(this.opcionNombre2);
     let TituloGrafica = this.opcionSeleccionadoNombreGrafica['nombre'];
-    this.TituloGraf= this.opcionSeleccionadoNombreGrafica['nombre'];
+    this.TituloGraf = this.opcionSeleccionadoNombreGrafica['nombre'];
     let DatosGrafica = new FormData();
     this.GraficaID = "2";
     DatosGrafica.append('nombre', this.opcionSeleccionadoNombreGrafica['nombre']);
@@ -284,9 +285,9 @@ export class TablaComponent implements OnInit {
         this.displayMaximizable2 = true;
         this.grafica2 = data;
 
-        this.presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['total']];
-        this.secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['total']];
-        this.vocal = [this.grafica2[2]['hombre'], this.grafica2[2]['mujer'], this.grafica2[2]['total']];
+        this.presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['otro'],this.grafica2[0]['total']];
+        this.secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['otro'],this.grafica2[1]['total']];
+        this.vocal = [this.grafica2[2]['hombre'], this.grafica2[2]['mujer'], this.grafica2[2]['otro'], this.grafica2[2]['total']];
         this.Titulo = TituloGrafica;
 
         this.Cargo = [];
@@ -310,7 +311,7 @@ export class TablaComponent implements OnInit {
           }
 
           this.Cargo.push(v.cargo + ' ' + TituloGrafica);
-          this.CargoValores.push({ value: v.total, name: Titulo1 + '\n' + Titulo2 + ' \n HOMBRES: ' + v.hombre + '\n MUJERES:' + v.mujer + '\n TOTAL:' + v.total });
+          this.CargoValores.push({ value: v.total, name: Titulo1 + '\n' + Titulo2 + ' \n HOMBRES: ' + v.hombre + '\n MUJERES:' + v.mujer + '\n OTRO:' + v.otro + '\n TOTAL:' + v.total });
         });
         this.DrawGrafica(this.Cargo, this.CargoValores, this.Titulo, this.GraficaID);
         this.opcionSeleccionadoNombreGrafica = {};
@@ -358,9 +359,9 @@ export class TablaComponent implements OnInit {
         this.displayMaximizable = true;
         this.grafica2 = data;
 
-        let presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['total']];
-        let secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['total']];
-        let vocal = [this.grafica2[2]['hombre'], this.grafica2[2]['mujer'], this.grafica2[2]['total']];
+        let presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['otro'],  this.grafica2[0]['total']];
+        let secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['otro'],  this.grafica2[1]['total']];
+        let vocal = [this.grafica2[2]['hombre'], this.grafica2[2]['mujer'], this.grafica2[2]['otro'],  this.grafica2[2]['total']];
         //this.DrawGrafica2(presidente, secretario, vocal, TituloGrafica);
 
         this.opcionSeleccionadoNombreGrafica = {};
@@ -396,6 +397,7 @@ export class TablaComponent implements OnInit {
           source: [
             { product: 'Hombres', 'LICADMON': grafica[0]['HOMBRES'], 'ISC': grafica[1]['HOMBRES'], 'IELECT': grafica[2]['HOMBRES'], 'MECA': grafica[3]['HOMBRES'], 'IND': grafica[4]['HOMBRES'], 'IGE': grafica[5]['HOMBRES'], 'CP': grafica[6]['HOMBRES'] },
             { product: 'Mujeres', 'LICADMON': grafica[0]['MUJERES'], 'ISC': grafica[1]['MUJERES'], 'IELECT': grafica[2]['MUJERES'], 'MECA': grafica[3]['MUJERES'], 'IND': grafica[4]['MUJERES'], 'IGE': grafica[5]['MUJERES'], 'CP': grafica[6]['MUJERES'] },
+            { product: 'Otro', 'LICADMON': grafica[0]['OTRO'], 'ISC': grafica[1]['OTRO'], 'IELECT': grafica[2]['OTRO'], 'MECA': grafica[3]['OTRO'], 'IND': grafica[4]['OTRO'], 'IGE': grafica[5]['OTRO'], 'CP': grafica[6]['OTRO'] },
             { product: 'Total', 'LICADMON': grafica[0]['TOTAL'], 'ISC': grafica[1]['TOTAL'], 'IELECT': grafica[2]['TOTAL'], 'MECA': grafica[3]['TOTAL'], 'IND': grafica[4]['TOTAL'], 'IGE': grafica[5]['TOTAL'], 'CP': grafica[6]['TOTAL'] }
           ]
         },
@@ -442,7 +444,8 @@ export class TablaComponent implements OnInit {
           source: [
             { product: 'Hombres', 'Presidente': presidente[0], 'Secretario': secretario[0], 'Vocal': vocal[0] },
             { product: 'Mujeres', 'Presidente': presidente[1], 'Secretario': secretario[1], 'Vocal': vocal[1] },
-            { product: 'Total', 'Presidente': presidente[2], 'Secretario': secretario[2], 'Vocal': vocal[2] }
+            { product: 'Otro', 'Presidente': presidente[2], 'Secretario': secretario[2], 'Vocal': vocal[2] },
+            { product: 'Total', 'Presidente': presidente[3], 'Secretario': secretario[3], 'Vocal': vocal[3] }
           ]
         },
         toolbox: {
@@ -493,7 +496,7 @@ export class TablaComponent implements OnInit {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['Hombres', 'Mujeres', 'Total']
+          data: ['Hombres', 'Mujeres', 'Otro,' , 'Total']
         },
         yAxis: {
           type: 'value'
@@ -502,37 +505,37 @@ export class TablaComponent implements OnInit {
           {
             name: 'LICADMON',
             type: 'line',
-            data: [grafica[0]['HOMBRES'], grafica[0]['MUJERES'], grafica[0]['TOTAL']]
+            data: [grafica[0]['HOMBRES'], grafica[0]['MUJERES'], grafica[0]['OTRO'], grafica[0]['TOTAL']]
           },
           {
             name: 'ISC',
             type: 'line',
-            data: [grafica[1]['HOMBRES'], grafica[1]['MUJERES'], grafica[1]['TOTAL']]
+            data: [grafica[1]['HOMBRES'], grafica[1]['MUJERES'], grafica[1]['OTRO'], grafica[1]['TOTAL']]
           },
           {
             name: 'IELECT',
             type: 'line',
-            data: [grafica[2]['HOMBRES'], grafica[2]['MUJERES'], grafica[2]['TOTAL']]
+            data: [grafica[2]['HOMBRES'], grafica[2]['MUJERES'], grafica[2]['OTRO'], grafica[2]['TOTAL']]
           },
           {
             name: 'MECA',
             type: 'line',
-            data: [grafica[3]['HOMBRES'], grafica[3]['MUJERES'], grafica[3]['TOTAL']]
+            data: [grafica[3]['HOMBRES'], grafica[3]['MUJERES'], grafica[3]['OTRO'], grafica[3]['TOTAL']]
           },
           {
             name: 'IND',
             type: 'line',
-            data: [grafica[4]['HOMBRES'], grafica[4]['MUJERES'], grafica[4]['TOTAL']]
+            data: [grafica[4]['HOMBRES'], grafica[4]['MUJERES'], grafica[4]['OTRO'], grafica[4]['TOTAL']]
           },
           {
             name: 'IGE',
             type: 'line',
-            data: [grafica[5]['HOMBRES'], grafica[5]['MUJERES'], grafica[5]['TOTAL']]
+            data: [grafica[5]['HOMBRES'], grafica[5]['MUJERES'], grafica[5]['OTRO'], grafica[5]['TOTAL']]
           },
           {
             name: 'CP',
             type: 'line',
-            data: [grafica[6]['HOMBRES'], grafica[6]['MUJERES'], grafica[6]['TOTAL']]
+            data: [grafica[6]['HOMBRES'], grafica[6]['MUJERES'], grafica[6]['OTRO'], grafica[6]['TOTAL']]
           }
         ]
       };
@@ -564,7 +567,7 @@ export class TablaComponent implements OnInit {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['hombre', 'mujer', 'total']
+          data: ['hombre', 'mujer', 'otro', 'total']
         },
         yAxis: {
           type: 'value'
@@ -573,17 +576,17 @@ export class TablaComponent implements OnInit {
           {
             name: 'Presidente',
             type: 'line',
-            data: [presidente[0], presidente[1], presidente[2]]
+            data: [presidente[0], presidente[1], presidente[2], presidente[3]]
           },
           {
             name: 'Secretario',
             type: 'line',
-            data: [secretario[0], secretario[1], secretario[2]]
+            data: [secretario[0], secretario[1], secretario[2], presidente[3]]
           },
           {
             name: 'Vocal',
             type: 'line',
-            data: [vocal[0], vocal[1], vocal[2]]
+            data: [vocal[0], vocal[1], vocal[2], presidente[3]]
           }
         ]
       };
@@ -679,7 +682,7 @@ export class TablaComponent implements OnInit {
         formData.append('nombre2', this.opcionNombre['nombre']);
         formData.append('id', this.opcionNombre['id']);
         // Call Service
-        this.GeneratePDF(formData,nombreFile2);
+        this.GeneratePDF(formData, nombreFile2);
 
       }
     ).catch(function (error) {
@@ -689,7 +692,7 @@ export class TablaComponent implements OnInit {
   }
   GeneratePDF(File: FormData, nombre) {
 
-       this.httpselect.getPDF(File).subscribe(
+    this.httpselect.getPDF(File).subscribe(
       (resp) => {
         this.respBlob = resp;
 
@@ -714,54 +717,54 @@ export class TablaComponent implements OnInit {
 
 
 
-getPDFGrafica2() {
-  console.log();
-  let ahora: Date = new Date();
-  let nombreFile2 = 'Libros_Titulacion_' + ahora.getFullYear() + '-' + ahora.getMonth() + '-' + ahora.getDate() + '_' + ahora.getHours() + "-" + ahora.getMinutes() + "-" + ahora.getSeconds();
+  getPDFGrafica2() {
+    console.log();
+    let ahora: Date = new Date();
+    let nombreFile2 = 'Libros_Titulacion_' + ahora.getFullYear() + '-' + ahora.getMonth() + '-' + ahora.getDate() + '_' + ahora.getHours() + "-" + ahora.getMinutes() + "-" + ahora.getSeconds();
 
-  this.blockUI.start('Generando PDF...'); // Start blocking
-  let formData = new FormData();
-  let IMGRAFICA = document.getElementById('ImageGrafica2');
-  htmlToImage.toPng(IMGRAFICA).then(
-    (imgbase64) => {
+    this.blockUI.start('Generando PDF...'); // Start blocking
+    let formData = new FormData();
+    let IMGRAFICA = document.getElementById('ImageGrafica2');
+    htmlToImage.toPng(IMGRAFICA).then(
+      (imgbase64) => {
 
-      this.imgF.src = imgbase64;
+        this.imgF.src = imgbase64;
 
-      // document.body.appendChild(img);
-      //  this.img.src = dataUrl;
+        // document.body.appendChild(img);
+        //  this.img.src = dataUrl;
 
-      // Save in FormData
-      // formData.append('imagen', event.target.files[0], 'grafica.png');
-      formData.append('imagen', this.imgF.src);
-      formData.append('nombre', this.TituloGraf);
-      formData.append('nombre2', this.opcionNombre2['nombre']);
-      formData.append('id', this.opcionNombre2['id']);
-      // Call Service
-      this.GeneratePDF2(formData,nombreFile2);
+        // Save in FormData
+        // formData.append('imagen', event.target.files[0], 'grafica.png');
+        formData.append('imagen', this.imgF.src);
+        formData.append('nombre', this.TituloGraf);
+        formData.append('nombre2', this.opcionNombre2['nombre']);
+        formData.append('id', this.opcionNombre2['id']);
+        // Call Service
+        this.GeneratePDF2(formData, nombreFile2);
 
-    }
-  ).catch(function (error) {
-    this.blockUI.stop();
-    console.error('oops, something went wrong!', error);
-  });
-}
-GeneratePDF2(File: FormData, nombre) {
-
-     this.httpselect.getPDF2(File).subscribe(
-    (resp) => {
-      this.respBlob = resp;
-
-      let blob = new Blob([this.respBlob], { type: 'application/pdf' });
-      let a = document.createElement('a');
-      a.href = window.URL.createObjectURL(blob);
-      let nombreFile = nombre + '.pdf';
-      a.download = nombreFile;
-      document.body.appendChild(a);
-      a.click();
+      }
+    ).catch(function (error) {
       this.blockUI.stop();
-    },
-    (error) => { console.log(error); this.blockUI.stop(); }
-  );
+      console.error('oops, something went wrong!', error);
+    });
+  }
+  GeneratePDF2(File: FormData, nombre) {
 
-}
+    this.httpselect.getPDF2(File).subscribe(
+      (resp) => {
+        this.respBlob = resp;
+
+        let blob = new Blob([this.respBlob], { type: 'application/pdf' });
+        let a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        let nombreFile = nombre + '.pdf';
+        a.download = nombreFile;
+        document.body.appendChild(a);
+        a.click();
+        this.blockUI.stop();
+      },
+      (error) => { console.log(error); this.blockUI.stop(); }
+    );
+
+  }
 }

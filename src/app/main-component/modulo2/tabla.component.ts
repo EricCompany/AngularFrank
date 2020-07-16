@@ -172,7 +172,7 @@ export class TablaComponent implements OnInit {
         this.seleccionado = '';
       },
       (error) => {
-        this.MessageService.add({ key: 'excel', severity: 'info', summary: 'Estatus EXCEL', detail: 'Es posible que el nombre con el que intenta registrar el archivo este en uso, FAVOR DE VERIFICAR!' });
+        this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + error['error'] + "'", life: 20000 });
         console.log(error);
         this.blockUI.stop();
         this.mostrar = false;
@@ -285,8 +285,8 @@ export class TablaComponent implements OnInit {
         this.displayMaximizable2 = true;
         this.grafica2 = data;
 
-        this.presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['otro'],this.grafica2[0]['total']];
-        this.secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['otro'],this.grafica2[1]['total']];
+        this.presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['otro'], this.grafica2[0]['total']];
+        this.secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['otro'], this.grafica2[1]['total']];
         this.vocal = [this.grafica2[2]['hombre'], this.grafica2[2]['mujer'], this.grafica2[2]['otro'], this.grafica2[2]['total']];
         this.Titulo = TituloGrafica;
 
@@ -359,9 +359,9 @@ export class TablaComponent implements OnInit {
         this.displayMaximizable = true;
         this.grafica2 = data;
 
-        let presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['otro'],  this.grafica2[0]['total']];
-        let secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['otro'],  this.grafica2[1]['total']];
-        let vocal = [this.grafica2[2]['hombre'], this.grafica2[2]['mujer'], this.grafica2[2]['otro'],  this.grafica2[2]['total']];
+        let presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['otro'], this.grafica2[0]['total']];
+        let secretario = [this.grafica2[1]['hombre'], this.grafica2[1]['mujer'], this.grafica2[1]['otro'], this.grafica2[1]['total']];
+        let vocal = [this.grafica2[2]['hombre'], this.grafica2[2]['mujer'], this.grafica2[2]['otro'], this.grafica2[2]['total']];
         //this.DrawGrafica2(presidente, secretario, vocal, TituloGrafica);
 
         this.opcionSeleccionadoNombreGrafica = {};
@@ -496,7 +496,7 @@ export class TablaComponent implements OnInit {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['Hombres', 'Mujeres', 'Otro,' , 'Total']
+          data: ['Hombres', 'Mujeres', 'Otro,', 'Total']
         },
         yAxis: {
           type: 'value'

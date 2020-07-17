@@ -7,7 +7,6 @@ export class LibrosTitulacionDTO{
     semestreAnio: string;
     hombre: string;
     mujer: string;
-    otro: string;
     opcionTitulacion: string;
     noLibro: number;
     foja: number;

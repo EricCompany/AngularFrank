@@ -13,7 +13,7 @@ import { Verify } from '../../DTO/VerificacionExcelDTO';
 import htmlToImage from 'html-to-image';
 import { logging } from 'protractor';
 import { Router } from '@angular/router';
-import {MainComponentComponent} from '../main-component.component';
+import { MainComponentComponent } from '../main-component.component';
 @Component({
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
@@ -45,6 +45,9 @@ export class TablaComponent implements OnInit {
   verificacion: Verify;
   opcionSeleccionado: any;
   opcionSeleccionadoGrafica: any;
+  opcionNombre: any;
+  opcionNombre2: any;
+  TituloGraf: any;
   opcionSeleccionadoNombreGrafica: any;
   seleccionado: any;
   Grado: any;
@@ -57,6 +60,7 @@ export class TablaComponent implements OnInit {
   mostrarInputGrafica = false;
   mostrarBotonGrafica = false;
   displayMaximizable: boolean;
+  displayMaximizable2: boolean;
   options: any;
   optionsM: any;
   dataTitle: any[];
@@ -74,9 +78,9 @@ export class TablaComponent implements OnInit {
   DisabledBar: boolean = false;
   GraficaID: any;
 
-  constructor( public app: MainComponentComponent, private router: Router, private MessageService: MessageService, private http: Modulo3Service, private form: FormBuilder, private httpselect: SelectService) {
+  constructor(public app: MainComponentComponent, private router: Router, private MessageService: MessageService, private http: Modulo3Service, private form: FormBuilder, private httpselect: SelectService) {
     this.app.activeIndex = 1;
-    let dataUser =  JSON.parse(sessionStorage.getItem('DataUser'));
+    let dataUser = JSON.parse(sessionStorage.getItem('DataUser'));
     if (dataUser === null) {
       this.router.navigate(['/']);
     }
@@ -147,7 +151,7 @@ export class TablaComponent implements OnInit {
     }
   }
   getDateTable2(event) {
- 
+
   }
   uploadFileToActivity() {
     this.blockUI.start('Procesando Archivo...'); // Start blocking
@@ -157,9 +161,9 @@ export class TablaComponent implements OnInit {
       (data) => {
         this.verificacion = data;
         if (data === 'El archivo ' + this.fileToUploadName + ' se cargo con EXITO.') {
-          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'",life:10000 });
+          this.MessageService.add({ key: 'excel', severity: 'success', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life: 10000 });
         } else {
-          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life:20000 });
+          this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + this.verificacion + "'", life: 20000 });
         }
         this.getArchivos();
         this.blockUI.stop();
@@ -167,7 +171,7 @@ export class TablaComponent implements OnInit {
         this.seleccionado = '';
       },
       (error) => {
-        this.MessageService.add({ key: 'excel', severity: 'info', summary: 'Estatus EXCEL', detail: 'Es posible que el nombre con el que intenta registrar el archivo este en uso, FAVOR DE VERIFICAR!' });
+        this.MessageService.add({ key: 'excel', severity: 'error', summary: 'Estatus EXCEL', detail: "'" + error['error'] + "'", life: 20000 });
         console.log(error);
         this.blockUI.stop();
         this.mostrar = false;
@@ -240,6 +244,7 @@ export class TablaComponent implements OnInit {
   }
 
   Grafica1() {
+    this.opcionNombre = this.opcionSeleccionadoGrafica;
     let TituloGrafica = '';
     this.GraficaID = "1";
     this.httpselect.graficaExcel(this.opcionSeleccionadoGrafica).subscribe(
@@ -266,14 +271,17 @@ export class TablaComponent implements OnInit {
   }
 
   Grafica2() {
+    this.opcionNombre2 = this.opcionSeleccionado;
+    console.log(this.opcionNombre2);
     let TituloGrafica = this.opcionSeleccionadoNombreGrafica['nombre'];
+    this.TituloGraf = this.opcionSeleccionadoNombreGrafica['nombre'];
     let DatosGrafica = new FormData();
     this.GraficaID = "2";
     DatosGrafica.append('nombre', this.opcionSeleccionadoNombreGrafica['nombre']);
     DatosGrafica.append('id', this.opcionSeleccionado['id']);
     this.httpselect.graficaExel2(DatosGrafica).subscribe(
       (data) => {
-        this.displayMaximizable = true;
+        this.displayMaximizable2 = true;
         this.grafica2 = data;
 
         this.presidente = [this.grafica2[0]['hombre'], this.grafica2[0]['mujer'], this.grafica2[0]['total']];
@@ -434,7 +442,7 @@ export class TablaComponent implements OnInit {
           source: [
             { product: 'Hombres', 'Presidente': presidente[0], 'Secretario': secretario[0], 'Vocal': vocal[0] },
             { product: 'Mujeres', 'Presidente': presidente[1], 'Secretario': secretario[1], 'Vocal': vocal[1] },
-            { product: 'Total', 'Presidente': presidente[2], 'Secretario': secretario[2], 'Vocal': vocal[2] }
+            { product: 'Total', 'Presidente': presidente[3], 'Secretario': secretario[3], 'Vocal': vocal[3] }
           ]
         },
         toolbox: {
@@ -649,6 +657,10 @@ export class TablaComponent implements OnInit {
   }
 
   getPDFGrafica() {
+    console.log();
+    let ahora: Date = new Date();
+    let nombreFile2 = 'Libros_Titulacion_' + ahora.getFullYear() + '-' + ahora.getMonth() + '-' + ahora.getDate() + '_' + ahora.getHours() + "-" + ahora.getMinutes() + "-" + ahora.getSeconds();
+
     this.blockUI.start('Generando PDF...'); // Start blocking
     let formData = new FormData();
     let IMGRAFICA = document.getElementById('ImageGrafica');
@@ -663,9 +675,11 @@ export class TablaComponent implements OnInit {
         // Save in FormData
         // formData.append('imagen', event.target.files[0], 'grafica.png');
         formData.append('imagen', this.imgF.src);
-
+        formData.append('nombre', nombreFile2);
+        formData.append('nombre2', this.opcionNombre['nombre']);
+        formData.append('id', this.opcionNombre['id']);
         // Call Service
-        this.GeneratePDF(formData);
+        this.GeneratePDF(formData, nombreFile2);
 
       }
     ).catch(function (error) {
@@ -673,7 +687,8 @@ export class TablaComponent implements OnInit {
       console.error('oops, something went wrong!', error);
     });
   }
-  GeneratePDF(File: FormData) {
+  GeneratePDF(File: FormData, nombre) {
+
     this.httpselect.getPDF(File).subscribe(
       (resp) => {
         this.respBlob = resp;
@@ -681,8 +696,65 @@ export class TablaComponent implements OnInit {
         let blob = new Blob([this.respBlob], { type: 'application/pdf' });
         let a = document.createElement('a');
         a.href = window.URL.createObjectURL(blob);
-        let ahora: Date = new Date();
-        let nombreFile = 'Libros_Titulacion_' + ahora.getFullYear() + '-' + ahora.getMonth() + '-' + ahora.getDate() + '_' + ahora.getHours() + "-" + ahora.getMinutes() + "-" + ahora.getSeconds() + '.pdf';
+        let nombreFile = nombre + '.pdf';
+        a.download = nombreFile;
+        document.body.appendChild(a);
+        a.click();
+        this.blockUI.stop();
+      },
+      (error) => { console.log(error); this.blockUI.stop(); }
+    );
+
+  }
+
+
+
+
+
+
+
+
+  getPDFGrafica2() {
+    console.log();
+    let ahora: Date = new Date();
+    let nombreFile2 = 'Libros_Titulacion_' + ahora.getFullYear() + '-' + ahora.getMonth() + '-' + ahora.getDate() + '_' + ahora.getHours() + "-" + ahora.getMinutes() + "-" + ahora.getSeconds();
+
+    this.blockUI.start('Generando PDF...'); // Start blocking
+    let formData = new FormData();
+    let IMGRAFICA = document.getElementById('ImageGrafica2');
+    htmlToImage.toPng(IMGRAFICA).then(
+      (imgbase64) => {
+
+        this.imgF.src = imgbase64;
+
+        // document.body.appendChild(img);
+        //  this.img.src = dataUrl;
+
+        // Save in FormData
+        // formData.append('imagen', event.target.files[0], 'grafica.png');
+        formData.append('imagen', this.imgF.src);
+        formData.append('nombre', this.TituloGraf);
+        formData.append('nombre2', this.opcionNombre2['nombre']);
+        formData.append('id', this.opcionNombre2['id']);
+        // Call Service
+        this.GeneratePDF2(formData, nombreFile2);
+
+      }
+    ).catch(function (error) {
+      this.blockUI.stop();
+      console.error('oops, something went wrong!', error);
+    });
+  }
+  GeneratePDF2(File: FormData, nombre) {
+
+    this.httpselect.getPDF2(File).subscribe(
+      (resp) => {
+        this.respBlob = resp;
+
+        let blob = new Blob([this.respBlob], { type: 'application/pdf' });
+        let a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        let nombreFile = nombre + '.pdf';
         a.download = nombreFile;
         document.body.appendChild(a);
         a.click();

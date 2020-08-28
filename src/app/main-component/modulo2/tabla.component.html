@@ -71,6 +71,56 @@
                         <button type="button" class="ui-button-danger" pButton icon="pi pi-times" (click)="displayMaximizable=false" label="CERRAR"></button>
                     </p-footer>
                 </p-dialog>
+                <p-dialog header="GRAFICAS" [(visible)]="displayMaximizable2" [modal]="true" [style]="{width: '85vw'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="true">
+
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-2 ui-lg-4"></div>
+                        <div class="ui-g-10 ui-md-8 ui-lg-4">
+                            <p-fieldset legend="Tipo de Grafica">
+                                <div class="ui-g ui-fluid">
+                                    <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-inputgroup">
+
+                                            <button type="button" [disabled]="DisabledPie" class="ui-button-secondary" pButton icon="pi pi-times" (click)="Pie()" label="Pie"></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-inputgroup">
+                                            <button type="button" [disabled]="DisabledLine" class="ui-button-secondary" pButton icon="pi pi-times" (click)="Line()" label="Line"></button>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-inputgroup">
+
+
+                                            <button type="button" [disabled]="DisabledBar" class="ui-button-secondary" pButton icon="pi pi-times" (click)="Bar()" label="Bar"></button>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </p-fieldset>
+
+                        </div>
+                        <div class="ui-g-1 ui-md-2 ui-lg-4"></div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-12  bordess li">
+
+                            <div id="ImageGrafica2" echarts type="line" [options]="options" [merge]="optionsM"></div>
+                        </div>
+                    </div>
+
+                    <p-footer>
+                        <button pButton type="button" (click)="getPDFGrafica2()" icon="pi pi-file-pdf" label="Descargar PDF" class="ui-button-success"></button>
+                        <button type="button" class="ui-button-danger" pButton icon="pi pi-times" (click)="displayMaximizable2=false" label="CERRAR"></button>
+                    </p-footer>
+                </p-dialog>
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-2 bordes">
                 <p-dropdown *ngIf="mostrarInputGrafica" [options]="TituloGrafica2Tipo" [(ngModel)]="Grado" (onChange)="getNombreGrafica()" placeholder="GRAFICA 2" optionLabel="value" [showClear]="false"></p-dropdown>
